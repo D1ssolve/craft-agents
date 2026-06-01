@@ -7,9 +7,9 @@ name: pm-routing
 ## 1. Core Principles
 
 - Every stage is driven by artifacts. Agents consume and produce named `.ai/` files.
-- Planning stages default to dual-model. Single-model is the exception.
+- Planning stages **always run in dual-model by default**. Single-model is strictly the exception (§2).
 - Chain state is tracked explicitly. No stage runs without its prerequisites.
-- Skip stages that add no value. Do not force the full pipeline.
+- **Never skip Planning stages (`spec-driven-dual`, `system-architect-dual`) to save time or effort.** They are mandatory gateways for correctness and model diversity. Skip only when you have already satisfied the stage's output requirement (e.g., spec already exists at `.ai/spec.md` with status `[FINAL]`).
 
 ---
 
@@ -66,8 +66,8 @@ Blockers:  list of unresolved issues
 
 ## 4. Routing Engine
 
-**First: check §11 Example Chains for an exact match and use that chain.**
-**Otherwise: apply stages in sequence below.**
+**First: check §10 Example Chains for an exact match and use that chain.**
+**Otherwise: apply stages in sequence below. Do not deviate from this order.**
 
 ```txt
 Stage 1 — Discovery (run if needed; code-explorer and research-agent may run in parallel)
@@ -75,8 +75,8 @@ Stage 1 — Discovery (run if needed; code-explorer and research-agent may run i
   → research-agent   when: external uncertainty exists (library choice, CVE, unknown API)
 
 Stage 2 — Planning (sequential within; each step requires previous to be complete)
-  → spec-driven-dual      when: requirements are vague or ambiguous
-  → system-architect-dual when: architectural decisions required
+  → spec-driven-dual      [MANDATORY unless spec already exists at .ai/spec.md with status [FINAL]]
+  → system-architect-dual [MANDATORY unless adr + tasks already exist at .ai/adr.md + .ai/tasks.md]
 
 Stage 3 — Execution
   → backend-developer [parallel task batches per §7]
@@ -84,6 +84,16 @@ Stage 3 — Execution
 Stage 4 — Validation
   → code-reviewer (single or parallel per §8)
 ```
+
+**Planning Stage Mandatory Triggers:**
+
+Do **not** skip to implementation. Invoke `spec-driven-dual` unless:
+- `.ai/spec.md` already exists with full specification and status marker `[FINAL]` at the top, AND
+- User acknowledges that spec is current and sufficient.
+
+Do **not** skip to implementation. Invoke `system-architect-dual` unless:
+- `.ai/adr.md` and `.ai/tasks.md` both exist with complete ADR and task breakdown, AND
+- `.ai/chain-state.md` records that Architecture stage is complete.
 
 **Discovery gating (mandatory):**
 

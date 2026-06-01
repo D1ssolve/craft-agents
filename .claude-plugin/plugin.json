@@ -76,6 +76,10 @@
       "description": "You MUST use this before any creative work - creating features, building components, adding functionality, or modifying behavior. Explores user intent, requirements and design before implementation.",
       "name": "brainstorming"
     },
+    "caveman": {
+      "description": "Ultra-compressed communication mode. Cuts token usage ~75% by speaking like caveman while keeping full technical accuracy. Supports intensity levels: lite, full (default), ultra, wenyan-lite, wenyan-full, wenyan-ultra. Use when user says \"caveman mode\", \"talk like caveman\", \"use caveman\", \"less tokens\", \"be brief\", or invokes /caveman. Also auto-triggers when token efficiency is requested.\n",
+      "name": "caveman"
+    },
     "chatgpt-linkedin-skill": {
       "description": "Generate and save LinkedIn-style engineering article when task contains non-default or user-requested work",
       "name": "chatgpt-linkedin-skill"
@@ -96,13 +100,13 @@
       "description": "Run single-file C# programs as scripts for quick experimentation, prototyping, and concept testing. Use when the user wants to write and execute a small disposable C# program without creating a full project or modifying an existing solution.",
       "name": "csharp-scripts"
     },
+    "git-worktree": {
+      "description": "Git worktree context awareness. Auto-activates when project is inside a .tasks task folder with git worktrees. Teaches agents about worktree structure, sibling services, and worktree-specific git behavior. Prevents agents from operating on the main repository instead of the worktree copy.\n",
+      "name": "git-worktree"
+    },
     "implementation-patterns": {
       "description": "Concrete implementation patterns and techniques for .NET backend systems. Use when implementing any of: background worker task claiming that must survive pod kills or DB outages (lease/heartbeat pattern); race-free duplicate detection without pre-check queries; streaming large file exports without MemoryStream. Triggers on: lease pattern, LockToken, LockedUntil, heartbeat worker, background job, task queue DB, crash-safe processing, distributed lock, stale task recovery, unique constraint conflict, CommitResult, duplicate active record, HasActiveExport, streaming export, temp file upload, MemoryStream OOM, IAsyncEnumerable export, FOR UPDATE SKIP LOCKED.\n",
       "name": "implementation-patterns"
-    },
-    "linkedin-article": {
-      "description": "Use when a task produced something non-trivial, novel, or explicitly requested by the user to write about. Writes a LinkedIn-style article and saves it to a .md file. Triggers automatically after completing work that involves: a non-obvious architectural decision, an interesting debugging story, a performance improvement with metrics, a migration, a tool built from scratch, a lesson learned from failure, or anything the user says \"write an article about\". Do NOT trigger for routine CRUD, boilerplate, or trivial tasks.\n",
-      "name": "linkedin-article"
     },
     "mempalace": {
       "description": "Use this skill whenever the user asks about mempalace CLI commands, how to run mempalace, how to use mempalace MCP server, or anything related to mempalace memory system. This skill encodes the correct way to run mempalace via uvx in this specific setup — where mempalace is NOT globally installed and must always be invoked through uvx. Trigger on any mention of: mempalace, memory palace, mcp server mempalace, mine convos, palace status, or any mempalace subcommand.\n",

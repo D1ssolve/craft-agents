@@ -25,7 +25,9 @@ Run these steps before anything else:
 
 ## Executing the Chain
 
-Run agents in the order determined by `pm-routing`. Key invariants:
+Run agents in the order determined by `pm-routing`. Apply the routing engine from `pm-routing` §4 **strictly**.
+
+Key invariants:
 
 - Spec stage completes before architecture stage starts.
 - Architecture stage completes before implementation starts.

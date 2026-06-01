@@ -3,7 +3,7 @@ color: info
 permissions:
   edit: allow
   external_directory:
-    ~/.config/opencode/templates/*: allow
+    ~/.config/opencode/agents/spec-driven-gpt/references*: allow
   question: allow
   task:
     "*": deny

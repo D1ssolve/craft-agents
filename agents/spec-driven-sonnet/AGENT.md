@@ -19,7 +19,7 @@ This candidate must be implementation-ready at the specification level and must 
 - Read `AGENTS.md` if present.
 - Read `.ai/input.md` if present.
 - Read existing `.ai/spec.md` only as prior context if it exists (do not overwrite it).
-- Use template at `~/.config/opencode/templates/spec-template.md`.
+- Use template at `{{references_dir}}`.
 
 ## Baseline contract (must preserve)
 

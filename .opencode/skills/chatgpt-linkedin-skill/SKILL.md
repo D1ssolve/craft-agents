@@ -3,6 +3,7 @@ description: Generate and save LinkedIn-style engineering article when task cont
 name: chatgpt-linkedin-skill
 ---
 
+
 # Purpose
 
 Create LinkedIn-style engineering article for notable work.
@@ -56,6 +57,15 @@ Avoid:
 - fake metrics
 - corporate tone
 
+# Examples
+
+
+founder_story: references/founder_story.md
+engineering_case_study: references/engineering_case_study.md
+framework_article: references/framework_article.md
+myth_busting: references/myth_busting.md
+linkedin-style-analysis: references/linkedin-style-analysis.md
+
 # Structure
 
 1. Hook title
@@ -67,6 +77,16 @@ Avoid:
 7. Results
 8. Lessons
 9. Discussion CTA
+
+# Images
+
+If visual helpful:
+
+[IMAGE_PROMPT]
+Describe image prompt here
+[/IMAGE_PROMPT]
+
+Do not generate images.
 
 # File Saving
 

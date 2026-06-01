@@ -2,7 +2,7 @@
 color: info
 description: Produces a high-rigor Sonnet candidate spec artifact at .ai/spec.sonnet.md for dual-run comparison. Preserves full spec quality gates and evidence discipline.
 name: spec-driven-sonnet
-permission: {"edit":"allow","external_directory":{"~/.config/opencode/templates/*":"allow"},"question":"allow","task":{"*":"deny","code-explorer":"allow"},"webfetch":"allow","websearch":"allow"}
+permission: {"edit":"allow","external_directory":{"~/.config/opencode/agents/spec-driven-sonnet/references*":"allow"},"question":"allow","task":{"*":"deny","code-explorer":"allow"},"webfetch":"allow","websearch":"allow"}
 ---
 # Spec-Driven Sonnet Candidate
 
@@ -19,7 +19,7 @@ This candidate must be implementation-ready at the specification level and must 
 - Read `AGENTS.md` if present.
 - Read `.ai/input.md` if present.
 - Read existing `.ai/spec.md` only as prior context if it exists (do not overwrite it).
-- Use template at `~/.config/opencode/templates/spec-template.md`.
+- Use template at `.opencode/agents/spec-driven-sonnet/references`.
 
 ## Baseline contract (must preserve)
 

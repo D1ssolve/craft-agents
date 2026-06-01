@@ -3,6 +3,7 @@ description: "Concrete implementation patterns and techniques for .NET backend s
 name: implementation-patterns
 ---
 
+
 # Implementation Patterns
 
 Navigation guide. Read the reference file for the specific pattern you need.
