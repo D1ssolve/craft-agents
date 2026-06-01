@@ -3,6 +3,8 @@ description: Use when changing Collection .NET layered app, especially export/se
 name: collection-codebase-patterns
 ---
 
+
+
 # Collection Codebase Patterns
 
 Use before implementation in `collection` repo when touching Backend, BLL, DAL, Contracts, Frontend, S3, exports, sessions, or plugins. Rules below come from HEAD export fixes (`09ea17b`).

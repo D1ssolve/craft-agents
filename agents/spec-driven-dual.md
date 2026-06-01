@@ -1,6 +1,5 @@
 ---
 description: Runs spec-driven GPT and Sonnet candidates in parallel, compares with a strict rubric, and synthesizes canonical .ai/spec.md with provenance.
-model: github-copilot/gpt-5.5
 name: spec-driven-dual
 ---
 

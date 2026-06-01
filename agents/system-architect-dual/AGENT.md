@@ -1,38 +1,8 @@
 ---
+name: system-architect-dual
 description: Runs system-architect GPT and Sonnet candidates in parallel,
   compares with a strict rubric, and synthesizes canonical .ai/adr.md +
   .ai/tasks.md with provenance.
-model: github-copilot/claude-opus-4.8
-name: system-architect-dual
-permissions:
-  _deprecatedOnFailure: false
-  _sources: {}
-  bash:
-    allow: []
-    ask: []
-    deny: []
-  default: ask
-  platform:
-    opencode:
-      edit: allow
-      question: allow
-      task:
-        "*": deny
-        system-architect-gpt: allow
-        system-architect-sonnet: allow
-      webfetch: allow
-      websearch: allow
-  sandbox: read-only
-  tools:
-    edit: allow
-    question: allow
-    task.*: deny
-    task.system-architect-gpt: allow
-    task.system-architect-sonnet: allow
-    webfetch: allow
-    websearch: allow
-role: subagent
-temperature: 0.4
 ---
 # System Architect Dual Orchestrator
 

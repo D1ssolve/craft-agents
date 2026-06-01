@@ -1,40 +1,8 @@
 ---
+name: adr-reviewer
 description: Reviews architecture decisions in .ai/adr.md before implementation.
   Validates layering, pattern consistency with existing codebase, operational
   readiness, and technology relevance using research evidence.
-model: github-copilot/claude-sonnet-4.6
-name: adr-reviewer
-permissions:
-  _deprecatedOnFailure: false
-  _sources: {}
-  bash:
-    allow: []
-    ask: []
-    deny: []
-  default: ask
-  platform:
-    opencode:
-      edit: deny
-      question: allow
-      task:
-        "*": deny
-        code-explorer: allow
-        codebase-indexer: allow
-        research-agent: allow
-      webfetch: allow
-      websearch: allow
-  sandbox: read-only
-  tools:
-    edit: deny
-    question: allow
-    task.*: deny
-    task.code-explorer: allow
-    task.codebase-indexer: allow
-    task.research-agent: allow
-    webfetch: allow
-    websearch: allow
-role: subagent
-temperature: 0.4
 ---
 # ADR Reviewer
 

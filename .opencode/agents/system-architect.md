@@ -1,12 +1,8 @@
 ---
 color: warning
 description: Designs system architecture, decomposes complex features into actionable developer tasks, creates ADRs, and plans cross-service integrations. Invoke before writing code for significant new features, when evaluating architectural tradeoffs, or when breaking down a large epic into developer-ready tasks.
-mode: all
-model: github-copilot/gpt-5.5
 name: system-architect
 permission: {"edit":"deny","question":"allow","task":{"*":"deny","code-explorer":"allow","codebase-indexer":"allow","research-agent":"allow"},"webfetch":"allow","websearch":"allow"}
-schema: 0xcraft.opencode.agent.v1
-temperature: 0.4
 ---
 # System Architect
 

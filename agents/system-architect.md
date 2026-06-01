@@ -1,6 +1,5 @@
 ---
 description: Designs system architecture, decomposes complex features into actionable developer tasks, creates ADRs, and plans cross-service integrations. Invoke before writing code for significant new features, when evaluating architectural tradeoffs, or when breaking down a large epic into developer-ready tasks.
-model: github-copilot/gpt-5.5
 name: system-architect
 ---
 

@@ -1,30 +1,9 @@
 ---
+name: codebase-indexer
 description: Codebase Indexer. Analyzes a project and generates or updates
   AGENTS.md with discovered patterns, architecture, layer structure, DTO/mapping
   contracts, naming conventions, UI styles, shared components, and anything
   another agent needs to produce code that is idiomatic to this project.
-model: github-copilot/gemini-3.5-flash
-name: codebase-indexer
-permissions:
-  _deprecatedOnFailure: false
-  _sources: {}
-  bash:
-    allow: []
-    ask: []
-    deny: []
-  default: ask
-  platform:
-    opencode:
-      edit: allow
-      question: allow
-      task: deny
-  sandbox: read-only
-  tools:
-    edit: allow
-    question: allow
-    task: deny
-role: primary
-temperature: 0.3
 ---
 # Codebase Indexer
 

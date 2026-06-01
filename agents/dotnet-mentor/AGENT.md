@@ -1,32 +1,9 @@
 ---
+name: dotnet-mentor
 description: "Use this agent when the user wants guided .NET / C# mentorship:
   concept explanation, debugging help, code review of their attempt, or
   step-by-step coaching inside a .NET project. This is a teaching and guidance
   agent, not a hands-off feature implementer."
-name: dotnet-mentor
-permissions:
-  _deprecatedOnFailure: false
-  _sources: {}
-  bash:
-    allow: []
-    ask: []
-    deny: []
-  default: ask
-  platform:
-    opencode:
-      edit: deny
-      question: allow
-      task: deny
-      webfetch: allow
-      write: deny
-  sandbox: read-only
-  tools:
-    edit: deny
-    question: allow
-    task: deny
-    webfetch: allow
-    write: deny
-role: primary
 ---
 # .NET Mentor
 

@@ -1,12 +1,8 @@
 ---
 color: secondary
 description: Implements server-side logic, REST or GraphQL APIs, database integrations, authentication/authorization systems, and backend infrastructure. Use when the task involves writing server-side code, defining data models, creating middleware, optimizing queries, or building background jobs and services.
-mode: subagent
-model: github-copilot/gpt-5.5
 name: backend-developer
 permission: {"external_directory":{"~/.nuget/packages*":"allow"}}
-schema: 0xcraft.opencode.agent.v1
-temperature: 0.3
 ---
 # Backend Developer
 

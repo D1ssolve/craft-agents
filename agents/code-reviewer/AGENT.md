@@ -1,27 +1,8 @@
 ---
+name: code-reviewer
 description: Production-readiness reviewer. Inspects code changes through a
   specified focus lens, runs relevant tests, and returns severity-ranked
   findings with a merge verdict.
-model: github-copilot/claude-sonnet-4.6
-name: code-reviewer
-permissions:
-  _deprecatedOnFailure: false
-  _sources: {}
-  bash:
-    allow: []
-    ask: []
-    deny: []
-  default: ask
-  platform:
-    opencode:
-      question: allow
-      webfetch: deny
-  sandbox: read-only
-  tools:
-    question: allow
-    webfetch: deny
-role: subagent
-temperature: 0.3
 ---
 # Code Reviewer
 

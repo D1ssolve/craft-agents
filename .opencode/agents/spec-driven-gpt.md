@@ -1,12 +1,8 @@
 ---
 color: info
 description: Produces a high-rigor GPT candidate spec artifact at .ai/spec.gpt.md for dual-run comparison. Preserves full spec quality gates and evidence discipline.
-mode: subagent
-model: github-copilot/gpt-5.5
 name: spec-driven-gpt
 permission: {"edit":"allow","external_directory":{"~/.config/opencode/templates/*":"allow"},"question":"allow","task":{"*":"deny","code-explorer":"allow"},"webfetch":"allow","websearch":"allow"}
-schema: 0xcraft.opencode.agent.v1
-temperature: 0.4
 ---
 # Spec-Driven GPT Candidate
 

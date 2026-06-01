@@ -2,12 +2,12 @@
 schema: "0xcraft.opencode.agent.v1"
 mode: all
 permissions:
-  question: allow
   bash: deny
-  write: deny
   edit: deny
-  webfetch: deny
+  question: allow
   task: deny
-  todowrite: deny
   todoread: deny
+  todowrite: deny
+  webfetch: deny
+  write: deny
 ---

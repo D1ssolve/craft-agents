@@ -3,6 +3,8 @@ description: Use when receiving code review feedback, before implementing sugges
 name: receiving-code-review
 ---
 
+
+
 # Code Review Reception
 
 ## Overview

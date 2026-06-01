@@ -1,6 +1,5 @@
 ---
 description: Reviews architecture decisions in .ai/adr.md before implementation. Validates layering, pattern consistency with existing codebase, operational readiness, and technology relevance using research evidence.
-model: github-copilot/claude-sonnet-4.6
 name: adr-reviewer
 ---
 

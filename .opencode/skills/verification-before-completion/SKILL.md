@@ -3,6 +3,8 @@ description: Use when about to claim work is complete, fixed, or passing, before
 name: verification-before-completion
 ---
 
+
+
 # Verification Before Completion
 
 ## Overview

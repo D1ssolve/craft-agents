@@ -1,28 +1,10 @@
 ---
+name: backend-developer
 description: Implements server-side logic, REST or GraphQL APIs, database
   integrations, authentication/authorization systems, and backend
   infrastructure. Use when the task involves writing server-side code, defining
   data models, creating middleware, optimizing queries, or building background
   jobs and services.
-model: github-copilot/gpt-5.5
-name: backend-developer
-permissions:
-  _deprecatedOnFailure: false
-  _sources: {}
-  bash:
-    allow: []
-    ask: []
-    deny: []
-  default: ask
-  platform:
-    opencode:
-      external_directory:
-        ~/.nuget/packages*: allow
-  sandbox: read-only
-  tools:
-    external_directory.~/.nuget/packages*: allow
-role: subagent
-temperature: 0.3
 ---
 # Backend Developer
 

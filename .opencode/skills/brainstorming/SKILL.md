@@ -3,6 +3,8 @@ description: You MUST use this before any creative work - creating features, bui
 name: brainstorming
 ---
 
+
+
 # Brainstorming Ideas Into Designs
 
 Help turn ideas into fully formed designs and specs through natural collaborative dialogue.

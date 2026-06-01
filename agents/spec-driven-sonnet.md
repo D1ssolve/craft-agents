@@ -1,6 +1,5 @@
 ---
 description: Produces a high-rigor Sonnet candidate spec artifact at .ai/spec.sonnet.md for dual-run comparison. Preserves full spec quality gates and evidence discipline.
-model: github-copilot/claude-sonnet-4.6
 name: spec-driven-sonnet
 ---
 

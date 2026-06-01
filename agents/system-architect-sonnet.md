@@ -1,6 +1,5 @@
 ---
 description: Produces a high-rigor Sonnet architecture candidate at .ai/adr.sonnet.md and .ai/tasks.sonnet.md for dual comparison.
-model: github-copilot/claude-sonnet-4.6
 name: system-architect-sonnet
 ---
 

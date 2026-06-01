@@ -1,12 +1,8 @@
 ---
 color: info
 description: Produces a high-rigor Sonnet candidate spec artifact at .ai/spec.sonnet.md for dual-run comparison. Preserves full spec quality gates and evidence discipline.
-mode: subagent
-model: github-copilot/claude-sonnet-4.6
 name: spec-driven-sonnet
 permission: {"edit":"allow","external_directory":{"~/.config/opencode/templates/*":"allow"},"question":"allow","task":{"*":"deny","code-explorer":"allow"},"webfetch":"allow","websearch":"allow"}
-schema: 0xcraft.opencode.agent.v1
-temperature: 0.4
 ---
 # Spec-Driven Sonnet Candidate
 

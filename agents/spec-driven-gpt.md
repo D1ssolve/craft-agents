@@ -1,6 +1,5 @@
 ---
 description: Produces a high-rigor GPT candidate spec artifact at .ai/spec.gpt.md for dual-run comparison. Preserves full spec quality gates and evidence discipline.
-model: github-copilot/gpt-5.5
 name: spec-driven-gpt
 ---
 

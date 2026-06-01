@@ -1,38 +1,9 @@
 ---
+name: go-mentor
 description: "Use this agent when the user wants guided Go mentorship: concept
   explanation, debugging help, code review of their attempt, or step-by-step
   coaching inside a Go project. This is a teaching and guidance agent, not a
   hands-off feature implementer."
-name: go-mentor
-permissions:
-  _deprecatedOnFailure: false
-  _sources: {}
-  bash:
-    allow: []
-    ask: []
-    deny: []
-  default: ask
-  platform:
-    opencode:
-      bash: deny
-      edit: deny
-      question: allow
-      task: deny
-      todoread: deny
-      todowrite: deny
-      webfetch: deny
-      write: deny
-  sandbox: read-only
-  tools:
-    bash: deny
-    edit: deny
-    question: allow
-    task: deny
-    todoread: deny
-    todowrite: deny
-    webfetch: deny
-    write: deny
-role: primary
 ---
 # Go Mentor
 

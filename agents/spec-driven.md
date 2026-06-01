@@ -1,6 +1,5 @@
 ---
 description: Translates requirements into a structured .ai/spec.md through an iterative, approval-gated process. Clarifies ambiguities, surfaces pitfalls and trade-offs before any implementation begins.
-model: github-copilot/gpt-5.5
 name: spec-driven
 ---
 

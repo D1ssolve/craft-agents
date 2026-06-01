@@ -1,6 +1,5 @@
 ---
 description: Research specialist. Finds the best available solution for a technical problem by querying up-to-date library documentation via Context7 MCP and searching the web for current community consensus, benchmarks, CVEs, changelogs, and best practices. Invoke before system-architect when the task involves selecting a library, comparing approaches, or validating that a technology supports a required capability.
-model: github-copilot/gpt-5.5
 name: research-agent
 ---
 

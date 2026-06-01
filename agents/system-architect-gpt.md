@@ -1,6 +1,5 @@
 ---
 description: Produces a high-rigor GPT architecture candidate at .ai/adr.gpt.md and .ai/tasks.gpt.md for dual comparison.
-model: github-copilot/gpt-5.5
 name: system-architect-gpt
 ---
 

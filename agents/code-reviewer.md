@@ -1,6 +1,5 @@
 ---
 description: Production-readiness reviewer. Inspects code changes through a specified focus lens, runs relevant tests, and returns severity-ranked findings with a merge verdict.
-model: github-copilot/claude-sonnet-4.6
 name: code-reviewer
 ---
 

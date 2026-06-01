@@ -1,6 +1,5 @@
 ---
 description: Read-only codebase search specialist. Use when the task is to find where behavior lives, which files implement something, or how a flow is wired. Parallelize independent searches when useful and return actionable file paths plus a direct answer.
-model: github-copilot/gemini-3.5-flash
 name: code-explorer
 ---
 

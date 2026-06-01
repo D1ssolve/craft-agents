@@ -1,12 +1,8 @@
 ---
 color: success
 description: Production-readiness reviewer. Inspects code changes through a specified focus lens, runs relevant tests, and returns severity-ranked findings with a merge verdict.
-mode: subagent
-model: github-copilot/claude-sonnet-4.6
 name: code-reviewer
 permission: {"question":"allow","webfetch":"deny"}
-schema: 0xcraft.opencode.agent.v1
-temperature: 0.3
 ---
 # Code Reviewer
 

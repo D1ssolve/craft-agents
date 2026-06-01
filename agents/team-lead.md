@@ -1,6 +1,5 @@
 ---
 description: Team Lead. Pure orchestrator — loads pm-routing skill, reads project context, composes the minimal subagent chain needed, and drives execution. Does not implement anything itself.
-model: zai-coding-plan/glm-5.1
 name: team-lead
 ---
 

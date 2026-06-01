@@ -3,6 +3,8 @@ description: Use this skill when you need up-to-date external library or framewo
 name: context7
 ---
 
+
+
 # Context7 Documentation Skill
 
 Use this skill to query **current external documentation** for libraries, frameworks, and SDKs through MCP Context7.

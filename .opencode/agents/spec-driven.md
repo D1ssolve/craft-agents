@@ -1,12 +1,8 @@
 ---
 color: info
 description: Translates requirements into a structured .ai/spec.md through an iterative, approval-gated process. Clarifies ambiguities, surfaces pitfalls and trade-offs before any implementation begins.
-mode: all
-model: github-copilot/gpt-5.5
 name: spec-driven
 permission: {"edit":"deny","external_directory":{"~/.config/opencode/templates/*":"allow"},"question":"allow","task":{"*":"deny","code-explorer":"allow"},"webfetch":"allow","websearch":"allow"}
-schema: 0xcraft.opencode.agent.v1
-temperature: 0.4
 ---
 # Spec-Driven
 
