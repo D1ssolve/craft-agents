@@ -4,55 +4,9 @@
   "version": "1.0.0",
   "description": "Production-ready agents, skills, hooks, and MCP descriptors for OpenCode.",
   "resources": {
-    "agents": [
-      "adr-reviewer",
-      "backend-developer",
-      "code-explorer",
-      "code-reviewer",
-      "codebase-indexer",
-      "dotnet-mentor",
-      "go-mentor",
-      "research-agent",
-      "spec-driven",
-      "spec-driven-dual",
-      "spec-driven-gpt",
-      "spec-driven-sonnet",
-      "system-architect",
-      "system-architect-dual",
-      "system-architect-gpt",
-      "system-architect-sonnet",
-      "team-lead"
-    ],
-    "skills": [
-      "brainstorming",
-      "chatgpt-linkedin-skill",
-      "code-review-orchestrator",
-      "collection-codebase-patterns",
-      "context7",
-      "csharp-scripts",
-      "implementation-patterns",
-      "linkedin-article",
-      "mempalace",
-      "microbenchmarking",
-      "migrate-dotnet9-to-dotnet10",
-      "nlm-skill",
-      "pm-routing",
-      "receiving-code-review",
-      "systematic-debugging",
-      "test-driven-development",
-      "topaz-js",
-      "verification-before-completion",
-      "writing-plans"
-    ],
-    "hooks": [
-      "agents-guard",
-      "caveman",
-      "git-worktree"
-    ],
-    "mcp": [
-      "context7",
-      "mempalace",
-      "notebooklm-mcp"
-    ]
+    "agents": ["agents/**"],
+    "skills": ["skills/**"],
+    "hooks": ["hooks/**"],
+    "mcp": ["mcp/**"]
   }
 }

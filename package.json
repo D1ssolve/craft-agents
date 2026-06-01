@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Production-ready agents, skills, hooks, and MCP descriptors for OpenCode.",
   "type": "module",
+  "files": ["agents", "skills", "hooks", "mcp", "0xcraft-pack.json"],
   "keywords": ["opencode", "0xcraft", "agents", "skills", "hooks", "mcp"],
   "license": "MIT"
 }

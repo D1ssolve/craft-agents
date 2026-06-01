@@ -11,7 +11,7 @@ permissions:
   edit: deny
   task:
     "*": deny
-  code-explorer: allow
+    code-explorer: allow
   external_directory:
     "~/.config/opencode/templates/*": allow
 ---
