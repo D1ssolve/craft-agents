@@ -1,0 +1,9 @@
+{
+  "main": "index.js",
+  "name": "0xcraft-opencode-plugin",
+  "peerDependencies": {
+    "@opencode-ai/sdk": ">=1.0.0"
+  },
+  "type": "module",
+  "version": "0.0.0"
+}
