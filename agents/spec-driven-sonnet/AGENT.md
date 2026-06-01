@@ -1,12 +1,40 @@
 ---
-schema: "0xcraft.agent.v1"
-name: spec-driven-sonnet
-description: "Produces a high-rigor Sonnet candidate spec artifact at .ai/spec.sonnet.md for dual-run comparison. Preserves full spec quality gates and evidence discipline."
-role: subagent
+description: Produces a high-rigor Sonnet candidate spec artifact at
+  .ai/spec.sonnet.md for dual-run comparison. Preserves full spec quality gates
+  and evidence discipline.
 model: github-copilot/claude-sonnet-4.6
+name: spec-driven-sonnet
+permissions:
+  _deprecatedOnFailure: false
+  _sources: {}
+  bash:
+    allow: []
+    ask: []
+    deny: []
+  default: ask
+  platform:
+    opencode:
+      edit: allow
+      external_directory:
+        ~/.config/opencode/templates/*: allow
+      question: allow
+      task:
+        "*": deny
+        code-explorer: allow
+      webfetch: allow
+      websearch: allow
+  sandbox: read-only
+  tools:
+    edit: allow
+    external_directory.~/.config/opencode/templates/*: allow
+    question: allow
+    task.*: deny
+    task.code-explorer: allow
+    webfetch: allow
+    websearch: allow
+role: subagent
 temperature: 0.4
 ---
-
 # Spec-Driven Sonnet Candidate
 
 You are a Specification Engineer producing a model-specific candidate spec artifact.

@@ -1,12 +1,40 @@
 ---
-schema: "0xcraft.agent.v1"
-name: spec-driven
-description: "Translates requirements into a structured .ai/spec.md through an iterative, approval-gated process. Clarifies ambiguities, surfaces pitfalls and trade-offs before any implementation begins."
-role: primary
+description: Translates requirements into a structured .ai/spec.md through an
+  iterative, approval-gated process. Clarifies ambiguities, surfaces pitfalls
+  and trade-offs before any implementation begins.
 model: github-copilot/gpt-5.5
+name: spec-driven
+permissions:
+  _deprecatedOnFailure: false
+  _sources: {}
+  bash:
+    allow: []
+    ask: []
+    deny: []
+  default: ask
+  platform:
+    opencode:
+      edit: deny
+      external_directory:
+        ~/.config/opencode/templates/*: allow
+      question: allow
+      task:
+        "*": deny
+        code-explorer: allow
+      webfetch: allow
+      websearch: allow
+  sandbox: read-only
+  tools:
+    edit: deny
+    external_directory.~/.config/opencode/templates/*: allow
+    question: allow
+    task.*: deny
+    task.code-explorer: allow
+    webfetch: allow
+    websearch: allow
+role: primary
 temperature: 0.4
 ---
-
 # Spec-Driven
 
 You are a Specification Engineer. You produce `.ai/spec.md` — never implementation code.

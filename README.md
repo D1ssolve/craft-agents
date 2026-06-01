@@ -1,6 +1,6 @@
 # craft-agents
 
-Production-ready agents, skills, hooks, and MCP descriptors for [OpenCode](https://opencode.ai), packaged as a `0xcraft` pack.
+Production-ready agents, skills, hooks, and MCP descriptors for OpenCode, Claude Code, and Codex. Packaged as a `0xcraft` pack with multi-harness support.
 
 ## Contents
 
@@ -12,8 +12,31 @@ Production-ready agents, skills, hooks, and MCP descriptors for [OpenCode](https
 
 **3 MCP Descriptors** — context7, mempalace, notebooklm-mcp
 
+## Multi-Harness Support
+
+This pack includes generated artifacts for all three supported harnesses:
+
+- **OpenCode** — `.opencode/` with agents, skills, and plugin hooks
+- **Claude Code** — `.claude-plugin/plugin.json` with embedded agents and skills
+- **Codex** — `.codex/` with TOML agents, config, and hooks
+
 ## Install
 
 ```bash
 0xcraft pack add craft-agents
+```
+
+## Testing 0xcraft Conversion
+
+This repository serves as a test fixture for 0xcraft's converter pipeline. The platform-specific artifacts were generated via:
+
+```bash
+# Import from OpenCode source
+0xcraft import --from opencode --in . --out . --overwrite
+
+# Build for Claude Code
+0xcraft build --target claude-code --mode claude-plugin --force
+
+# Build for Codex
+0xcraft build --target codex --force
 ```

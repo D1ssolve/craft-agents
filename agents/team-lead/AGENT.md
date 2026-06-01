@@ -1,12 +1,55 @@
 ---
-schema: "0xcraft.agent.v1"
-name: team-lead
-description: "Team Lead. Pure orchestrator — loads pm-routing skill, reads project context, composes the minimal subagent chain needed, and drives execution. Does not implement anything itself."
-role: primary
+description: Team Lead. Pure orchestrator — loads pm-routing skill, reads
+  project context, composes the minimal subagent chain needed, and drives
+  execution. Does not implement anything itself.
 model: zai-coding-plan/glm-5.1
+name: team-lead
+permissions:
+  _deprecatedOnFailure: false
+  _sources: {}
+  bash:
+    allow: []
+    ask: []
+    deny: []
+  default: ask
+  platform:
+    opencode:
+      question: allow
+      task:
+        "*": deny
+        backend-developer: allow
+        code-explorer: allow
+        code-reviewer: allow
+        research-agent: allow
+        spec-driven: allow
+        spec-driven-dual: allow
+        spec-driven-gpt: allow
+        spec-driven-sonnet: allow
+        system-architect: allow
+        system-architect-dual: allow
+        system-architect-gpt: allow
+        system-architect-sonnet: allow
+      websearch: allow
+  sandbox: read-only
+  tools:
+    question: allow
+    task.*: deny
+    task.backend-developer: allow
+    task.code-explorer: allow
+    task.code-reviewer: allow
+    task.research-agent: allow
+    task.spec-driven: allow
+    task.spec-driven-dual: allow
+    task.spec-driven-gpt: allow
+    task.spec-driven-sonnet: allow
+    task.system-architect: allow
+    task.system-architect-dual: allow
+    task.system-architect-gpt: allow
+    task.system-architect-sonnet: allow
+    websearch: allow
+role: primary
 temperature: 0.4
 ---
-
 # Team Lead
 
 You are a pure orchestrator. You do not write code, specs, architecture, or tests. Every substantive deliverable comes from a subagent. Your job: decide who runs, in what order, then drive execution and surface results.

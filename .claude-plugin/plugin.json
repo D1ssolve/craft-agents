@@ -1,0 +1,153 @@
+{
+  "agents": {
+    "adr-reviewer": {
+      "description": "Reviews architecture decisions in .ai/adr.md before implementation. Validates layering, pattern consistency with existing codebase, operational readiness, and technology relevance using research evidence.",
+      "name": "adr-reviewer"
+    },
+    "backend-developer": {
+      "description": "Implements server-side logic, REST or GraphQL APIs, database integrations, authentication/authorization systems, and backend infrastructure. Use when the task involves writing server-side code, defining data models, creating middleware, optimizing queries, or building background jobs and services.",
+      "name": "backend-developer"
+    },
+    "code-explorer": {
+      "description": "Read-only codebase search specialist. Use when the task is to find where behavior lives, which files implement something, or how a flow is wired. Parallelize independent searches when useful and return actionable file paths plus a direct answer.",
+      "name": "code-explorer"
+    },
+    "code-reviewer": {
+      "description": "Production-readiness reviewer. Inspects code changes through a specified focus lens, runs relevant tests, and returns severity-ranked findings with a merge verdict.",
+      "name": "code-reviewer"
+    },
+    "codebase-indexer": {
+      "description": "Codebase Indexer. Analyzes a project and generates or updates AGENTS.md with discovered patterns, architecture, layer structure, DTO/mapping contracts, naming conventions, UI styles, shared components, and anything another agent needs to produce code that is idiomatic to this project.",
+      "name": "codebase-indexer"
+    },
+    "dotnet-mentor": {
+      "description": "Use this agent when the user wants guided .NET / C# mentorship: concept explanation, debugging help, code review of their attempt, or step-by-step coaching inside a .NET project. This is a teaching and guidance agent, not a hands-off feature implementer.",
+      "name": "dotnet-mentor"
+    },
+    "go-mentor": {
+      "description": "Use this agent when the user wants guided Go mentorship: concept explanation, debugging help, code review of their attempt, or step-by-step coaching inside a Go project. This is a teaching and guidance agent, not a hands-off feature implementer.",
+      "name": "go-mentor"
+    },
+    "research-agent": {
+      "description": "Research specialist. Finds the best available solution for a technical problem by querying up-to-date library documentation via Context7 MCP and searching the web for current community consensus, benchmarks, CVEs, changelogs, and best practices. Invoke before system-architect when the task involves selecting a library, comparing approaches, or validating that a technology supports a required capability.",
+      "name": "research-agent"
+    },
+    "spec-driven": {
+      "description": "Translates requirements into a structured .ai/spec.md through an iterative, approval-gated process. Clarifies ambiguities, surfaces pitfalls and trade-offs before any implementation begins.",
+      "name": "spec-driven"
+    },
+    "spec-driven-dual": {
+      "description": "Runs spec-driven GPT and Sonnet candidates in parallel, compares with a strict rubric, and synthesizes canonical .ai/spec.md with provenance.",
+      "name": "spec-driven-dual"
+    },
+    "spec-driven-gpt": {
+      "description": "Produces a high-rigor GPT candidate spec artifact at .ai/spec.gpt.md for dual-run comparison. Preserves full spec quality gates and evidence discipline.",
+      "name": "spec-driven-gpt"
+    },
+    "spec-driven-sonnet": {
+      "description": "Produces a high-rigor Sonnet candidate spec artifact at .ai/spec.sonnet.md for dual-run comparison. Preserves full spec quality gates and evidence discipline.",
+      "name": "spec-driven-sonnet"
+    },
+    "system-architect": {
+      "description": "Designs system architecture, decomposes complex features into actionable developer tasks, creates ADRs, and plans cross-service integrations. Invoke before writing code for significant new features, when evaluating architectural tradeoffs, or when breaking down a large epic into developer-ready tasks.",
+      "name": "system-architect"
+    },
+    "system-architect-dual": {
+      "description": "Runs system-architect GPT and Sonnet candidates in parallel, compares with a strict rubric, and synthesizes canonical .ai/adr.md + .ai/tasks.md with provenance.",
+      "name": "system-architect-dual"
+    },
+    "system-architect-gpt": {
+      "description": "Produces a high-rigor GPT architecture candidate at .ai/adr.gpt.md and .ai/tasks.gpt.md for dual comparison.",
+      "name": "system-architect-gpt"
+    },
+    "system-architect-sonnet": {
+      "description": "Produces a high-rigor Sonnet architecture candidate at .ai/adr.sonnet.md and .ai/tasks.sonnet.md for dual comparison.",
+      "name": "system-architect-sonnet"
+    },
+    "team-lead": {
+      "description": "Team Lead. Pure orchestrator — loads pm-routing skill, reads project context, composes the minimal subagent chain needed, and drives execution. Does not implement anything itself.",
+      "name": "team-lead"
+    }
+  },
+  "description": "Generated Claude plugin resources from 0xcraft.",
+  "name": "0xcraft-claude-plugin",
+  "skills": {
+    "brainstorming": {
+      "description": "You MUST use this before any creative work - creating features, building components, adding functionality, or modifying behavior. Explores user intent, requirements and design before implementation.",
+      "name": "brainstorming"
+    },
+    "chatgpt-linkedin-skill": {
+      "description": "Generate and save LinkedIn-style engineering article when task contains non-default or user-requested work",
+      "name": "chatgpt-linkedin-skill"
+    },
+    "code-review-orchestrator": {
+      "description": "Orchestrates parallel code reviews. Selects mode based on change scope, launches focused sub-reviews via code-reviewer, aggregates into a unified verdict.",
+      "name": "code-review-orchestrator"
+    },
+    "collection-codebase-patterns": {
+      "description": "Use when changing Collection .NET layered app, especially export/session/plugin/DAL/Backend/BLL/S3 code; checklist prevents review mistakes around layer boundaries, exceptions, filters, constraints, streaming, and contracts.",
+      "name": "collection-codebase-patterns"
+    },
+    "context7": {
+      "description": "Use this skill when you need up-to-date external library or framework documentation via MCP Context7. Best for implementation, architecture validation, and external contract verification. Triggers on tasks involving third-party SDKs, framework APIs, library configuration, version-specific syntax, or current docs/examples.",
+      "name": "context7"
+    },
+    "csharp-scripts": {
+      "description": "Run single-file C# programs as scripts for quick experimentation, prototyping, and concept testing. Use when the user wants to write and execute a small disposable C# program without creating a full project or modifying an existing solution.",
+      "name": "csharp-scripts"
+    },
+    "implementation-patterns": {
+      "description": "Concrete implementation patterns and techniques for .NET backend systems. Use when implementing any of: background worker task claiming that must survive pod kills or DB outages (lease/heartbeat pattern); race-free duplicate detection without pre-check queries; streaming large file exports without MemoryStream. Triggers on: lease pattern, LockToken, LockedUntil, heartbeat worker, background job, task queue DB, crash-safe processing, distributed lock, stale task recovery, unique constraint conflict, CommitResult, duplicate active record, HasActiveExport, streaming export, temp file upload, MemoryStream OOM, IAsyncEnumerable export, FOR UPDATE SKIP LOCKED.\n",
+      "name": "implementation-patterns"
+    },
+    "linkedin-article": {
+      "description": "Use when a task produced something non-trivial, novel, or explicitly requested by the user to write about. Writes a LinkedIn-style article and saves it to a .md file. Triggers automatically after completing work that involves: a non-obvious architectural decision, an interesting debugging story, a performance improvement with metrics, a migration, a tool built from scratch, a lesson learned from failure, or anything the user says \"write an article about\". Do NOT trigger for routine CRUD, boilerplate, or trivial tasks.\n",
+      "name": "linkedin-article"
+    },
+    "mempalace": {
+      "description": "Use this skill whenever the user asks about mempalace CLI commands, how to run mempalace, how to use mempalace MCP server, or anything related to mempalace memory system. This skill encodes the correct way to run mempalace via uvx in this specific setup — where mempalace is NOT globally installed and must always be invoked through uvx. Trigger on any mention of: mempalace, memory palace, mcp server mempalace, mine convos, palace status, or any mempalace subcommand.\n",
+      "name": "mempalace"
+    },
+    "microbenchmarking": {
+      "description": "Activate this skill when BenchmarkDotNet (BDN) is involved in the task — creating, running, configuring, or reviewing BDN benchmarks. Also activate when microbenchmarking .NET code would be useful and BenchmarkDotNet is the likely tool. Consider activating when answering a .NET performance question requires measurement and BenchmarkDotNet may be needed. Covers microbenchmark design, BDN configuration and project setup, how to run BDN microbenchmarks efficiently and effectively, and using BDN for side-by-side performance comparisons. Do NOT use for profiling/tracing .NET code (dotnet-trace, PerfView), production telemetry, or load/stress testing (Crank, k6).\n",
+      "name": "microbenchmarking"
+    },
+    "migrate-dotnet9-to-dotnet10": {
+      "description": "Migrate a .NET 9 project or solution to .NET 10 and resolve all breaking changes. USE FOR: upgrading TargetFramework from net9.0 to net10.0, fixing build errors after updating the .NET 10 SDK, resolving .NET 10 / C# 14 / ASP.NET Core 10 / EF Core 10 breaking changes, SDK/NuGet and container changes, new obsoletion warnings, and common migrations such as System.Linq.Async to AsyncEnumerable. Prefer project diagnostics/build checks and project test checks for verification; use shell restore/build/test only when the user explicitly requests raw CLI output or structured tooling fails twice with the same infrastructure error. DO NOT USE FOR: .NET Framework migrations, upgrading from .NET 8 or earlier (use migrate-dotnet8-to-dotnet9 first), greenfield .NET 10 projects, or cosmetic modernization. LOADS REFERENCES: csharp-compiler, core-libraries, sdk-msbuild (always); aspnet-core, efcore, cryptography, extensions-hosting, serialization-networking, winforms-wpf, containers-interop (selective).\n",
+      "name": "migrate-dotnet9-to-dotnet10"
+    },
+    "nlm-skill": {
+      "description": "Expert guide for the NotebookLM CLI (`nlm`) and MCP server - interfaces for Google NotebookLM. Use this skill when users want to interact with NotebookLM programmatically, including: creating/managing notebooks, adding sources (URLs, YouTube, text, Google Drive), generating content (podcasts, reports, quizzes, flashcards, mind maps, slides, infographics, videos, data tables), conducting research, chatting with sources, or automating NotebookLM workflows. Triggers on mentions of \"nlm\", \"notebooklm\", \"notebook lm\", \"podcast generation\", \"audio overview\", or any NotebookLM-related automation task.",
+      "name": "nlm-skill"
+    },
+    "pm-routing": {
+      "description": "Dynamic routing logic for Team Lead agent. Describes each subagent's role, inputs/outputs, dual-mode default policy, and heuristics to decide which agents are needed for a given task.",
+      "name": "pm-routing"
+    },
+    "receiving-code-review": {
+      "description": "Use when receiving code review feedback, before implementing suggestions, especially if feedback seems unclear or technically questionable - requires technical rigor and verification, not performative agreement or blind implementation",
+      "name": "receiving-code-review"
+    },
+    "systematic-debugging": {
+      "description": "Use when encountering any bug, test failure, or unexpected behavior, before proposing fixes",
+      "name": "systematic-debugging"
+    },
+    "test-driven-development": {
+      "description": "Use when implementing any feature or bugfix, before writing implementation code",
+      "name": "test-driven-development"
+    },
+    "topaz-js": {
+      "description": "Write, review, and debug Topaz JavaScript scripts for EventService. Use this skill whenever the user mentions Topaz, EventService, KafkaEvent, HttpRequestEvent, or asks to write/fix/review JS scripts that run on the .NET runtime. Triggers on: \"напиши скрипт для Topaz\", \"Topaz script\", \"EventService handler\", \"KafkaEvent\", \"HttpRequestEvent\", \"скрипт для обработки события\", \"Topaz JS\", \"JavaScriptRecipient\". Always use this skill when writing or reviewing any script that uses Message, Producer, HttpClient, Logger, or other Topaz injected globals — even if the user doesn't say \"Topaz\" explicitly.\n",
+      "name": "topaz-js"
+    },
+    "verification-before-completion": {
+      "description": "Use when about to claim work is complete, fixed, or passing, before committing or creating PRs - requires running verification commands and confirming output before making any success claims; evidence before assertions always",
+      "name": "verification-before-completion"
+    },
+    "writing-plans": {
+      "description": "Use when you have a spec or requirements for a multi-step task, before touching code",
+      "name": "writing-plans"
+    }
+  },
+  "version": "0.0.0"
+}

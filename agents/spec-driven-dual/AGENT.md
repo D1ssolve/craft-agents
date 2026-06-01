@@ -1,12 +1,38 @@
 ---
-schema: "0xcraft.agent.v1"
-name: spec-driven-dual
-description: "Runs spec-driven GPT and Sonnet candidates in parallel, compares with a strict rubric, and synthesizes canonical .ai/spec.md with provenance."
-role: subagent
+description: Runs spec-driven GPT and Sonnet candidates in parallel, compares
+  with a strict rubric, and synthesizes canonical .ai/spec.md with provenance.
 model: github-copilot/gpt-5.5
+name: spec-driven-dual
+permissions:
+  _deprecatedOnFailure: false
+  _sources: {}
+  bash:
+    allow: []
+    ask: []
+    deny: []
+  default: ask
+  platform:
+    opencode:
+      edit: allow
+      question: allow
+      task:
+        "*": deny
+        spec-driven-gpt: allow
+        spec-driven-sonnet: allow
+      webfetch: allow
+      websearch: allow
+  sandbox: read-only
+  tools:
+    edit: allow
+    question: allow
+    task.*: deny
+    task.spec-driven-gpt: allow
+    task.spec-driven-sonnet: allow
+    webfetch: allow
+    websearch: allow
+role: subagent
 temperature: 0.4
 ---
-
 # Spec-Driven Dual Orchestrator
 
 You orchestrate dual-model specification generation and produce a single canonical spec artifact.

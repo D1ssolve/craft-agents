@@ -1,12 +1,40 @@
 ---
-schema: "0xcraft.agent.v1"
-name: system-architect-gpt
-description: "Produces a high-rigor GPT architecture candidate at .ai/adr.gpt.md and .ai/tasks.gpt.md for dual comparison."
-role: subagent
+description: Produces a high-rigor GPT architecture candidate at .ai/adr.gpt.md
+  and .ai/tasks.gpt.md for dual comparison.
 model: github-copilot/gpt-5.5
+name: system-architect-gpt
+permissions:
+  _deprecatedOnFailure: false
+  _sources: {}
+  bash:
+    allow: []
+    ask: []
+    deny: []
+  default: ask
+  platform:
+    opencode:
+      edit: allow
+      question: allow
+      task:
+        "*": deny
+        code-explorer: allow
+        codebase-indexer: allow
+        research-agent: allow
+      webfetch: allow
+      websearch: allow
+  sandbox: read-only
+  tools:
+    edit: allow
+    question: allow
+    task.*: deny
+    task.code-explorer: allow
+    task.codebase-indexer: allow
+    task.research-agent: allow
+    webfetch: allow
+    websearch: allow
+role: subagent
 temperature: 0.4
 ---
-
 # System Architect GPT Candidate
 
 You are a System Architect producing model-specific candidate architecture artifacts.

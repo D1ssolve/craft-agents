@@ -1,13 +1,6 @@
 # 0xcraft build output — do not edit manually
 .0xcraft/
-opencode.json
 *.md.opencode.md
-
-# Platform adapter output
-.claude-plugin/
-.claude/agents/
-.codex/
-.agents/plugins/
 
 # Node
 node_modules/
