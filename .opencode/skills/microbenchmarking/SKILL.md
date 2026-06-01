@@ -3,8 +3,6 @@ description: "Activate this skill when BenchmarkDotNet (BDN) is involved in the 
 name: microbenchmarking
 ---
 
-
-
 # Benchmark Authoring Guidelines
 
 BenchmarkDotNet (BDN) is a .NET library for writing and running microbenchmarks. Throughout this skill, "BDN" refers to BenchmarkDotNet.

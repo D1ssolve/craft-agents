@@ -3,8 +3,6 @@ description: "Migrate a .NET 9 project or solution to .NET 10 and resolve all br
 name: migrate-dotnet9-to-dotnet10
 ---
 
-
-
 # .NET 9 → .NET 10 Migration
 
 Migrate a .NET 9 project or solution to .NET 10, systematically resolving all breaking changes. The outcome is a project targeting `net10.0` that builds cleanly, passes tests, and accounts for every behavioral, source-incompatible, and binary-incompatible change introduced in the .NET 10 release.

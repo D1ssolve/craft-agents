@@ -3,8 +3,6 @@ description: "Expert guide for the NotebookLM CLI (`nlm`) and MCP server - inter
 name: nlm-skill
 ---
 
-
-
 # NotebookLM CLI & MCP Expert
 
 This skill provides comprehensive guidance for using NotebookLM via both the `nlm` CLI and MCP tools.

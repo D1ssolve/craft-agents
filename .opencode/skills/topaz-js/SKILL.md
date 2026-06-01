@@ -3,8 +3,6 @@ description: "Write, review, and debug Topaz JavaScript scripts for EventService
 name: topaz-js
 ---
 
-
-
 # Topaz JavaScript Skill
 
 Topaz использует **синтаксис JavaScript**, но выполняется на **.NET runtime**. Это принципиальное

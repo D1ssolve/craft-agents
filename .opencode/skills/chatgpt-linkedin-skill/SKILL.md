@@ -3,8 +3,6 @@ description: Generate and save LinkedIn-style engineering article when task cont
 name: chatgpt-linkedin-skill
 ---
 
-
-
 # Purpose
 
 Create LinkedIn-style engineering article for notable work.

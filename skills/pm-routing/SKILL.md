@@ -3,6 +3,7 @@ description: "Dynamic routing logic for Team Lead agent. Describes each subagent
 name: pm-routing
 ---
 
+
 ## 1. Core Principles
 
 - Every stage is driven by artifacts. Agents consume and produce named `.ai/` files.
