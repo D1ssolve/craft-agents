@@ -1,10 +1,9 @@
 ---
-schema: "0xcraft.opencode.agent.v1"
 mode: all
-permissions:
-  edit: deny
+permission:
   question: allow
-  task: deny
-  webfetch: allow
   write: deny
+  edit: deny
+  webfetch: allow
+  task: deny
 ---

@@ -1,6 +1,9 @@
 ---
+mode: subagent
+model: github-copilot/gpt-5.5
 color: success
-permissions:
+temperature: 0.3
+permission:
   question: allow
   webfetch: deny
 ---

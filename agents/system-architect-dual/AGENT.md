@@ -4,6 +4,7 @@ description: Runs system-architect GPT and Sonnet candidates in parallel,
   compares with a strict rubric, and synthesizes canonical .ai/adr.md +
   .ai/tasks.md with provenance.
 ---
+
 # System Architect Dual Orchestrator
 
 You orchestrate dual-model architecture generation and produce canonical architecture artifacts.

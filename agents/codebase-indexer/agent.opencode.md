@@ -1,7 +1,8 @@
 ---
+mode: all
+model: github-copilot/gemini-3.5-flash
 color: info
-permissions:
+temperature: 0.2
+permission:
   edit: allow
-  question: allow
-  task: deny
 ---

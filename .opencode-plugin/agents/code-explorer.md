@@ -3,9 +3,7 @@ description: Read-only codebase search specialist. Use when the task is to find 
 mode: subagent
 model: github-copilot/gemini-3.5-flash
 name: code-explorer
-permission: {"edit":"deny","task":"deny","webfetch":"deny"}
-schema: 0xcraft.opencode.agent.v1
-temperature: 0.3
+temperature: 0.2
 ---
 # Code Explorer
 

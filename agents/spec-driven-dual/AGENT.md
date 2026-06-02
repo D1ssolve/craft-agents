@@ -3,6 +3,7 @@ name: spec-driven-dual
 description: Runs spec-driven GPT and Sonnet candidates in parallel, compares
   with a strict rubric, and synthesizes canonical .ai/spec.md with provenance.
 ---
+
 # Spec-Driven Dual Orchestrator
 
 You orchestrate dual-model specification generation and produce a single canonical spec artifact.

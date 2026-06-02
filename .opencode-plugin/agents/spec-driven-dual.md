@@ -1,8 +1,10 @@
 ---
 color: info
 description: Runs spec-driven GPT and Sonnet candidates in parallel, compares with a strict rubric, and synthesizes canonical .ai/spec.md with provenance.
+mode: subagent
+model: github-copilot/gpt-5.5
 name: spec-driven-dual
-permission: {"edit":"allow","question":"allow","task":{"*":"deny","spec-driven-gpt":"allow","spec-driven-sonnet":"allow"},"webfetch":"allow","websearch":"allow"}
+temperature: 0.4
 ---
 # Spec-Driven Dual Orchestrator
 

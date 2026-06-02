@@ -1,8 +1,11 @@
 ---
+mode: subagent
+model: github-copilot/gpt-5.5
 color: info
-permissions:
+temperature: 0.5
+permission:
   edit: deny
   task: deny
-  webfetch: allow
   websearch: allow
+  webfetch: allow
 ---

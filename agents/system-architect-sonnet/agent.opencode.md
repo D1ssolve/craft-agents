@@ -1,13 +1,16 @@
 ---
+mode: subagent
+model: github-copilot/sonnet-4.6
 color: warning
-permissions:
-  edit: allow
+temperature: 0.4
+permission:
   question: allow
+  websearch: allow
+  webfetch: allow
+  edit: allow
   task:
     "*": deny
     code-explorer: allow
     codebase-indexer: allow
     research-agent: allow
-  webfetch: allow
-  websearch: allow
 ---

@@ -3,6 +3,7 @@ name: system-architect-gpt
 description: Produces a high-rigor GPT architecture candidate at .ai/adr.gpt.md
   and .ai/tasks.gpt.md for dual comparison.
 ---
+
 # System Architect GPT Candidate
 
 You are a System Architect producing model-specific candidate architecture artifacts.

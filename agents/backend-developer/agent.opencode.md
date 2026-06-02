@@ -1,6 +1,9 @@
 ---
+mode: subagent
+model: github-copilot/gpt-5.5
 color: secondary
-permissions:
+temperature: 0.3
+permission:
   external_directory:
-    ~/.nuget/packages*: allow
+    "~/.nuget/packages*": allow
 ---

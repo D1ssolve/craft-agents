@@ -4,6 +4,7 @@ description: Produces a high-rigor GPT candidate spec artifact at
   .ai/spec.gpt.md for dual-run comparison. Preserves full spec quality gates and
   evidence discipline.
 ---
+
 # Spec-Driven GPT Candidate
 
 You are a Specification Engineer producing a model-specific candidate spec artifact.

@@ -1,8 +1,10 @@
 ---
 color: info
 description: Produces a high-rigor Sonnet candidate spec artifact at .ai/spec.sonnet.md for dual-run comparison. Preserves full spec quality gates and evidence discipline.
+mode: subagent
+model: github-copilot/sonnet-4.6
 name: spec-driven-sonnet
-permission: {"edit":"allow","external_directory":{"~/.config/opencode/agents/spec-driven-sonnet/references*":"allow"},"question":"allow","task":{"*":"deny","code-explorer":"allow"},"webfetch":"allow","websearch":"allow"}
+temperature: 0.4
 ---
 # Spec-Driven Sonnet Candidate
 

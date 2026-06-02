@@ -1,13 +1,16 @@
 ---
+mode: subagent
+model: github-copilot/sonnet-4.6
 color: info
-permissions:
-  edit: allow
-  external_directory:
-    ~/.config/opencode/agents/spec-driven-sonnet/references*: allow
+temperature: 0.4
+permission:
   question: allow
+  websearch: allow
+  webfetch: allow
+  edit: allow
   task:
     "*": deny
     code-explorer: allow
-  webfetch: allow
-  websearch: allow
+  external_directory:
+    ~/.config/opencode/agents/spec-driven-gpt/references*: allow
 ---

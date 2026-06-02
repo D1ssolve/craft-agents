@@ -1,13 +1,16 @@
 ---
+mode: all
+model: github-copilot/gpt-5.5
 color: warning
-permissions:
-  edit: deny
+temperature: 0.4
+permission:
   question: allow
+  websearch: allow
+  webfetch: allow
+  edit: deny
   task:
     "*": deny
     code-explorer: allow
     codebase-indexer: allow
     research-agent: allow
-  webfetch: allow
-  websearch: allow
 ---

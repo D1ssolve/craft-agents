@@ -1,8 +1,10 @@
 ---
 color: warning
 description: Produces a high-rigor GPT architecture candidate at .ai/adr.gpt.md and .ai/tasks.gpt.md for dual comparison.
+mode: subagent
+model: github-copilot/gpt-5.5
 name: system-architect-gpt
-permission: {"edit":"allow","question":"allow","task":{"*":"deny","code-explorer":"allow","codebase-indexer":"allow","research-agent":"allow"},"webfetch":"allow","websearch":"allow"}
+temperature: 0.4
 ---
 # System Architect GPT Candidate
 
