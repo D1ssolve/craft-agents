@@ -4,13 +4,29 @@ Production-ready agents, skills, hooks, and MCP descriptors for OpenCode, Claude
 
 ## Contents
 
-**17 Agents** — adr-reviewer, backend-developer, code-explorer, code-reviewer, codebase-indexer, dotnet-mentor, go-mentor, research-agent, spec-driven, spec-driven-dual, spec-driven-gpt, spec-driven-sonnet, system-architect, system-architect-dual, system-architect-gpt, system-architect-sonnet, team-lead
+| Resource | Count | Reference |
+|----------|-------|-----------|
+| **Agents** | 17 | [docs/agents.md](docs/description-agents.md) |
+| **Skills** | 112 (17 original + 93 from [dotnet/skills](https://github.com/dotnet/skills)) | [docs/skills.md](docs/description-skills.md) |
+| **Hooks** | 3 | agents-guard, caveman, git-worktree |
+| **MCP Descriptors** | 3 | context7, mempalace, notebooklm-mcp |
 
-**19 Skills** — brainstorming, chatgpt-linkedin-skill, code-review-orchestrator, collection-codebase-patterns, context7, csharp-scripts, implementation-patterns, linkedin-article, mempalace, microbenchmarking, migrate-dotnet9-to-dotnet10, nlm-skill, pm-routing, receiving-code-review, systematic-debugging, test-driven-development, topaz-js, verification-before-completion, writing-plans
+## .NET Skills
 
-**3 Hooks** — agents-guard, caveman, git-worktree
+This pack includes 93 curated .NET skills from [dotnet/skills](https://github.com/dotnet/skills), maintained as a git submodule:
 
-**3 MCP Descriptors** — context7, mempalace, notebooklm-mcp
+```bash
+# First-time setup
+git submodule update --init vendor/dotnet-skills
+
+# Sync skills from submodule into skills/
+make sync-dotnet-skills
+
+# Update submodule to latest upstream + sync
+make update-dotnet-skills
+```
+
+The sync script (`scripts/sync-dotnet-skills.sh`) copies skills from `vendor/dotnet-skills/plugins/*/skills/*` into `skills/`, filters unsupported frontmatter keys, preserves `references/`, and tracks provenance via `.dotnet-source` markers.
 
 ## Multi-Harness Support
 

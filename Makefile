@@ -10,6 +10,13 @@ build-codex:
 build-claude-code:
 	bun run /Users/diss0x/dev/0xcraft/src/cli/index.ts build --target claude-code --mode claude-plugin --force
 
-build: build-opencode build-codex build-claude-code
+build: build-opencode-plugin build-codex build-claude-code
 
-.PHONY: build build-opencode build-codex build-claude-code
+sync-dotnet-skills:
+	./scripts/sync-dotnet-skills.sh
+
+update-dotnet-skills:
+	git submodule update --remote vendor/dotnet-skills
+	./scripts/sync-dotnet-skills.sh
+
+.PHONY: build build-opencode-plugin build-codex build-claude-code sync-dotnet-skills update-dotnet-skills
