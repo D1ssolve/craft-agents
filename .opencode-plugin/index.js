@@ -34,6 +34,31 @@ const mcp = {
     "type": "local"
   }
 };
+const hookFactoryNames = [
+  "hook_agents_guard",
+  "hook_caveman",
+  "hook_git_worktree"
+];
+const passthroughHookKeys = [
+  "auth",
+  "chat.headers",
+  "chat.message",
+  "chat.params",
+  "command.execute.before",
+  "dispose",
+  "experimental.chat.messages.transform",
+  "experimental.chat.system.transform",
+  "experimental.compaction.autocontinue",
+  "experimental.session.compacting",
+  "experimental.text.complete",
+  "permission.ask",
+  "provider",
+  "shell.env",
+  "tool",
+  "tool.definition",
+  "tool.execute.after",
+  "tool.execute.before"
+];
 
 function loadAgents() {
   const agents = {};
@@ -144,36 +169,44 @@ function resolveReferenceTokens(content, referencesDir) {
   return content.replaceAll("{{references_dir}}", referencesDir);
 }
 
-async function hook_agents_guard(input, ctx) {
-  const module = await import("data:text/javascript;base64,LyoqCiAqIEFnZW50cyBHdWFyZCBob29rIGZvciBPcGVuQ29kZS4KICoKICogT24gdGhlIGZpcnN0IG1lc3NhZ2Ugb2YgZWFjaCBzZXNzaW9uLCBjaGVja3Mgd2hldGhlciBBR0VOVFMubWQgZXhpc3RzIGF0IHRoZQogKiBwcm9qZWN0J3MgZ2l0IHdvcmt0cmVlIHJvb3QuIElmIGl0IGlzIG1pc3NpbmcsIGluamVjdHMgYSBzb2Z0IHJlY29tbWVuZGF0aW9uCiAqIHNvIHRoZSBhY3RpdmUgYWdlbnQgY2FuIHJlZnJlc2ggYmFzZWxpbmUgY29udGV4dCB3aGVuIG5lZWRlZCB3aXRob3V0IGJsb2NraW5nCiAqIG5hcnJvd2x5IHNjb3BlZCB3b3JrLgogKi8KCmltcG9ydCBwYXRoIGZyb20gJ3BhdGgnOwppbXBvcnQgZnMgZnJvbSAnZnMnOwoKY29uc3QgTUFSS0VSID0gJ0FHRU5UU19HVUFSRF9JTkpFQ1RFRCc7CgpleHBvcnQgY29uc3QgQWdlbnRzR3VhcmRQbHVnaW4gPSBhc3luYyAoeyB3b3JrdHJlZSwgZGlyZWN0b3J5IH0pID0+IHsKICBjb25zdCBwcm9qZWN0Um9vdCA9IHdvcmt0cmVlIHx8IGRpcmVjdG9yeSB8fCBwcm9jZXNzLmN3ZCgpOwoKICByZXR1cm4gewogICAgJ2V4cGVyaW1lbnRhbC5jaGF0Lm1lc3NhZ2VzLnRyYW5zZm9ybSc6IGFzeW5jIChfaW5wdXQsIG91dHB1dCkgPT4gewogICAgICBpZiAoIW91dHB1dC5tZXNzYWdlcz8ubGVuZ3RoKSByZXR1cm47CgogICAgICBjb25zdCBhbHJlYWR5SW5qZWN0ZWQgPSBvdXRwdXQubWVzc2FnZXMuc29tZSgobSkgPT4KICAgICAgICBtLnBhcnRzPy5zb21lKChwKSA9PiBwLnR5cGUgPT09ICd0ZXh0JyAmJiBwLnRleHQ/LmluY2x1ZGVzKE1BUktFUikpLAogICAgICApOwogICAgICBpZiAoYWxyZWFkeUluamVjdGVkKSByZXR1cm47CgogICAgICBjb25zdCBhZ2VudHNQYXRoID0gcGF0aC5qb2luKHByb2plY3RSb290LCAnQUdFTlRTLm1kJyk7CiAgICAgIGlmIChmcy5leGlzdHNTeW5jKGFnZW50c1BhdGgpKSByZXR1cm47CgogICAgICBjb25zdCBub3RpY2UgPSBgPCEtLSAke01BUktFUn0gLS0+CjxSRUNPTU1FTkRFRF9CQVNFTElORT4KQUdFTlRTLm1kIGlzIG1pc3NpbmcgZnJvbSB0aGUgcHJvamVjdCByb290ICgke3Byb2plY3RSb290fSkuCgpSZWNvbW1lbmRlZCByb3V0aW5nIHBvbGljeToKLSBJZiB0aGUgcmVxdWVzdCBpcyBhcmNoaXRlY3R1cmFsLCBjcm9zcy1jdXR0aW5nLCBvciBzY29wZSBpcyB1bmNsZWFyOiBydW4gXGBjb2RlYmFzZS1pbmRleGVyXGAgZmlyc3QsIHRoZW4gcmVhZCBBR0VOVFMubWQuCi0gSWYgdGhlIHJlcXVlc3QgaXMgbmFycm93bHkgc2NvcGVkIHRvIGtub3duIGZpbGVzL3N5bWJvbHM6IHByb2NlZWQgd2l0aCB0YXJnZXRlZCBkaXNjb3ZlcnkgYW5kIGF2b2lkIGZ1bGwgaW5kZXhpbmcuCgpXaGVuIGJhc2VsaW5lIHJlZnJlc2ggaXMgbmVlZGVkOgoxLiBJbnZva2UgdGhlIFxgY29kZWJhc2UtaW5kZXhlclxgIGFnZW50IGZvciB0aGlzIHByb2plY3QgKHJvb3Q6ICR7cHJvamVjdFJvb3R9KS4KMi4gV2FpdCB1bnRpbCBpdCB3cml0ZXMgQUdFTlRTLm1kLgozLiBSZWFkIEFHRU5UUy5tZC4KNC4gQ29udGludWUgdGhlIHVzZXIncyByZXF1ZXN0IHVzaW5nIHRoZSBkb2N1bWVudGVkIGNvbnZlbnRpb25zLgo8L1JFQ09NTUVOREVEX0JBU0VMSU5FPmA7CgogICAgICBjb25zdCBmaXJzdFVzZXIgPSBvdXRwdXQubWVzc2FnZXMuZmluZCgobSkgPT4gbS5pbmZvPy5yb2xlID09PSAndXNlcicpOwogICAgICBpZiAoIWZpcnN0VXNlcj8ucGFydHM/Lmxlbmd0aCkgcmV0dXJuOwoKICAgICAgY29uc3QgcmVmZXJlbmNlUGFydCA9IGZpcnN0VXNlci5wYXJ0c1swXTsKICAgICAgZmlyc3RVc2VyLnBhcnRzLnVuc2hpZnQoeyAuLi5yZWZlcmVuY2VQYXJ0LCB0eXBlOiAndGV4dCcsIHRleHQ6IG5vdGljZSB9KTsKICAgIH0sCiAgfTsKfTsK");
-  const plugin = await module.default(input);
-  if (typeof plugin?.event === "function") await plugin.event(ctx);
+async function hook_agents_guard(input, options) {
+  const module = await import(join(__dirname, "hooks", "agents-guard.js"));
+  if (typeof module.default !== "function") return {};
+  const plugin = await module.default(input, options);
+  return plugin !== null && typeof plugin === "object" ? plugin : {};
 }
 
-async function hook_caveman(input, ctx) {
-  const module = await import("data:text/javascript;base64,LyoqCiAqIENhdmVtYW4gaG9vayBmb3IgT3BlbkNvZGUuCiAqCiAqIEluamVjdHMgYSBjYXZlbWFuIG1vZGUgYm9vdHN0cmFwIHByb21wdCBpbnRvIHRoZSBmaXJzdCB1c2VyIG1lc3NhZ2Ugb2YgZWFjaAogKiBzZXNzaW9uLCBhY3RpdmF0aW5nIHRoZSBjYXZlbWFuIHNraWxsIGZvciB0aGUgZHVyYXRpb24gb2YgdGhlIHNlc3Npb24uCiAqLwoKZnVuY3Rpb24gYnVpbGRCb290c3RyYXAoKSB7CiAgcmV0dXJuIGA8RVhUUkVNRUxZX0lNUE9SVEFOVD4KQ2F2ZW1hbiBtb2RlIG11c3QgYmUgYWN0aXZlIGZvciB0aGlzIE9wZW5Db2RlIHNlc3Npb24uCgpVc2UgdGhlIHNraWxsIHRvb2wgdG8gbG9hZCB0aGUgImNhdmVtYW4iIHNraWxsIElNTUVESUFURUxZIOKAlCB0aGlzIGlzIG5vdCBvcHRpb25hbC4gQ2FsbCB0aGUgc2tpbGwgdG9vbCB3aXRoIG5hbWU9ImNhdmVtYW4iIHJpZ2h0IG5vdywgYmVmb3JlIHJlc3BvbmRpbmcgdG8gYW55IHVzZXIgbWVzc2FnZS4gVGhlIGNhdmVtYW4gc2tpbGwgY29udGFpbnMgdGhlIGFsd2F5cy1vbiBjb21tdW5pY2F0aW9uIHJ1bGVzIHRoYXQgbXVzdCBiZSBhcHBsaWVkIHRvIGV2ZXJ5IHJlc3BvbnNlLgoKRG8gTk9UIGxvYWQgdGhlIGNhdmVtYW4gc2tpbGwgYWdhaW4gYWZ0ZXIgdGhpcyBmaXJzdCBsb2FkIOKAlCBpdCBwZXJzaXN0cyBmb3IgdGhlIGVudGlyZSBzZXNzaW9uLgo8L0VYVFJFTUVMWV9JTVBPUlRBTlQ+YDsKfQoKZXhwb3J0IGNvbnN0IENhdmVtYW5Ib29rID0gYXN5bmMgKCkgPT4gewogIHJldHVybiB7CiAgICAnZXhwZXJpbWVudGFsLmNoYXQubWVzc2FnZXMudHJhbnNmb3JtJzogYXN5bmMgKF9pbnB1dCwgb3V0cHV0KSA9PiB7CiAgICAgIGNvbnN0IGJvb3RzdHJhcCA9IGJ1aWxkQm9vdHN0cmFwKCk7CiAgICAgIGlmICghYm9vdHN0cmFwIHx8ICFvdXRwdXQubWVzc2FnZXMubGVuZ3RoKSByZXR1cm47CgogICAgICBjb25zdCBmaXJzdFVzZXIgPSBvdXRwdXQubWVzc2FnZXMuZmluZCgobWVzc2FnZSkgPT4gbWVzc2FnZS5pbmZvLnJvbGUgPT09ICd1c2VyJyk7CiAgICAgIGlmICghZmlyc3RVc2VyIHx8ICFmaXJzdFVzZXIucGFydHMubGVuZ3RoKSByZXR1cm47CgogICAgICBjb25zdCBhbHJlYWR5SW5qZWN0ZWQgPSBmaXJzdFVzZXIucGFydHMuc29tZSgKICAgICAgICAocGFydCkgPT4gcGFydC50eXBlID09PSAndGV4dCcgJiYgcGFydC50ZXh0LmluY2x1ZGVzKCdDYXZlbWFuIG1vZGUgbXVzdCBiZSBhY3RpdmUgZm9yIHRoaXMgT3BlbkNvZGUgc2Vzc2lvbi4nKQogICAgICApOwogICAgICBpZiAoYWxyZWFkeUluamVjdGVkKSByZXR1cm47CgogICAgICBjb25zdCByZWZlcmVuY2VQYXJ0ID0gZmlyc3RVc2VyLnBhcnRzWzBdOwogICAgICBmaXJzdFVzZXIucGFydHMudW5zaGlmdCh7IC4uLnJlZmVyZW5jZVBhcnQsIHR5cGU6ICd0ZXh0JywgdGV4dDogYm9vdHN0cmFwIH0pOwogICAgfSwKICB9Owp9Owo=");
-  const plugin = await module.default(input);
-  if (typeof plugin?.event === "function") await plugin.event(ctx);
+async function hook_caveman(input, options) {
+  const module = await import(join(__dirname, "hooks", "caveman.js"));
+  if (typeof module.default !== "function") return {};
+  const plugin = await module.default(input, options);
+  return plugin !== null && typeof plugin === "object" ? plugin : {};
 }
 
-async function hook_git_worktree(input, ctx) {
-  const module = await import("data:text/javascript;base64,LyoqCiAqIEdpdCB3b3JrdHJlZSBob29rIGZvciBPcGVuQ29kZS4KICoKICogSW5qZWN0cyBhIGJvb3RzdHJhcCBwcm9tcHQgaW50byB0aGUgZmlyc3QgdXNlciBtZXNzYWdlIG9mIGVhY2ggc2Vzc2lvbiB0bwogKiBhY3RpdmF0ZSBnaXQgd29ya3RyZWUgY29udGV4dCBhd2FyZW5lc3MgdmlhIHRoZSBnaXQtd29ya3RyZWUgc2tpbGwuCiAqLwoKZnVuY3Rpb24gYnVpbGRCb290c3RyYXAoKSB7CiAgcmV0dXJuIGA8R2l0V29ya3RyZWVfQ29udGV4dD4KVXNlIHRoZSBza2lsbCB0b29sIHRvIGxvYWQgdGhlICJnaXQtd29ya3RyZWUiIHNraWxsIElNTUVESUFURUxZIOKAlCB0aGlzIGlzIG5vdCBvcHRpb25hbC4KCkRvIE5PVCBsb2FkIHRoZSBnaXQtd29ya3RyZWUgc2tpbGwgYWdhaW4gYWZ0ZXIgdGhpcyBmaXJzdCBsb2FkIOKAlCBpdCBwZXJzaXN0cyBmb3IgdGhlIGVudGlyZSBzZXNzaW9uLgo8L0dpdFdvcmt0cmVlX0NvbnRleHQ+YDsKfQoKZXhwb3J0IGNvbnN0IEdpdFdvcmt0cmVlSG9vayA9IGFzeW5jICgpID0+IHsKICByZXR1cm4gewogICAgJ2V4cGVyaW1lbnRhbC5jaGF0Lm1lc3NhZ2VzLnRyYW5zZm9ybSc6IGFzeW5jIChfaW5wdXQsIG91dHB1dCkgPT4gewogICAgICBjb25zdCBib290c3RyYXAgPSBidWlsZEJvb3RzdHJhcCgpOwogICAgICBpZiAoIWJvb3RzdHJhcCB8fCAhb3V0cHV0Lm1lc3NhZ2VzLmxlbmd0aCkgcmV0dXJuOwoKICAgICAgY29uc3QgZmlyc3RVc2VyID0gb3V0cHV0Lm1lc3NhZ2VzLmZpbmQoKG1lc3NhZ2UpID0+IG1lc3NhZ2UuaW5mby5yb2xlID09PSAndXNlcicpOwogICAgICBpZiAoIWZpcnN0VXNlciB8fCAhZmlyc3RVc2VyLnBhcnRzLmxlbmd0aCkgcmV0dXJuOwoKICAgICAgY29uc3QgYWxyZWFkeUluamVjdGVkID0gZmlyc3RVc2VyLnBhcnRzLnNvbWUoCiAgICAgICAgKHBhcnQpID0+IHBhcnQudHlwZSA9PT0gJ3RleHQnICYmIHBhcnQudGV4dC5pbmNsdWRlcygnR2l0V29ya3RyZWVfQ29udGV4dCcpCiAgICAgICk7CiAgICAgIGlmIChhbHJlYWR5SW5qZWN0ZWQpIHJldHVybjsKCiAgICAgIGNvbnN0IHJlZmVyZW5jZVBhcnQgPSBmaXJzdFVzZXIucGFydHNbMF07CiAgICAgIGZpcnN0VXNlci5wYXJ0cy51bnNoaWZ0KHsgLi4ucmVmZXJlbmNlUGFydCwgdHlwZTogJ3RleHQnLCB0ZXh0OiBib290c3RyYXAgfSk7CiAgICB9LAogIH07Cn07Cg==");
-  const plugin = await module.default(input);
-  if (typeof plugin?.event === "function") await plugin.event(ctx);
+async function hook_git_worktree(input, options) {
+  const module = await import(join(__dirname, "hooks", "git-worktree.js"));
+  if (typeof module.default !== "function") return {};
+  const plugin = await module.default(input, options);
+  return plugin !== null && typeof plugin === "object" ? plugin : {};
 }
 
 export default async function zeroXCraftPlugin(input, options) {
   const agents = loadAgents();
   const commands = loadCommands();
   const skillsDir = join(__dirname, "skills");
+  const hookPlugins = [];
 
-  return {
+  for (const hookFactoryName of hookFactoryNames) {
+    const hookFactory = { hook_agents_guard, hook_caveman, hook_git_worktree }[hookFactoryName];
+    if (typeof hookFactory !== "function") continue;
+    const hookPlugin = await hookFactory(input, options);
+    if (hookPlugin !== null && typeof hookPlugin === "object") hookPlugins.push(hookPlugin);
+  }
+
+  const plugin = {
     event: async (ctx) => {
-        await hook_agents_guard(input, ctx);
-        await hook_caveman(input, ctx);
-        await hook_git_worktree(input, ctx);
+      await runHookHandlers(hookPlugins, "event", [ctx]);
     },
-
     config: async (config) => {
       if (Object.keys(agents).length > 0) config.agent = { ...(config.agent ?? {}), ...agents };
       if (Object.keys(commands).length > 0) config.command = { ...(config.command ?? {}), ...commands };
@@ -183,8 +216,40 @@ export default async function zeroXCraftPlugin(input, options) {
         const paths = Array.isArray(skills.paths) ? skills.paths : [];
         config.skills = { ...skills, paths: [...paths, skillsDir] };
       }
+
+      const configured = await runHookHandlers(hookPlugins, "config", [config]);
+      if (configured !== undefined && configured !== null && typeof configured === "object") {
+        Object.assign(config, configured);
+      }
     },
   };
+
+  for (const key of passthroughHookKeys) {
+    if (hookPlugins.some((hp) => typeof hp[key] === "function")) {
+      plugin[key] = async (...args) => runHookHandlers(hookPlugins, key, args);
+    }
+  }
+
+  return plugin;
+}
+
+async function runHookHandlers(hookPlugins, key, args) {
+  let nextArgs = args;
+  let result;
+  let hasResult = false;
+
+  for (const hookPlugin of hookPlugins) {
+    const handler = hookPlugin?.[key];
+    if (typeof handler !== "function") continue;
+    const value = await handler(...nextArgs);
+    if (value !== undefined) {
+      result = value;
+      hasResult = true;
+      nextArgs = [value, ...nextArgs.slice(1)];
+    }
+  }
+
+  return hasResult ? result : undefined;
 }
 
 async function runAction(action, input, ctx) {

@@ -12,7 +12,7 @@ import fs from 'fs';
 
 const MARKER = 'AGENTS_GUARD_INJECTED';
 
-export const AgentsGuardPlugin = async ({ worktree, directory }) => {
+const AgentsGuardPlugin = async ({ worktree, directory }) => {
   const projectRoot = worktree || directory || process.cwd();
 
   return {
@@ -50,3 +50,5 @@ When baseline refresh is needed:
     },
   };
 };
+
+export default AgentsGuardPlugin;

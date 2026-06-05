@@ -15,7 +15,7 @@ Do NOT load the caveman skill again after this first load — it persists for th
 </EXTREMELY_IMPORTANT>`;
 }
 
-export const CavemanHook = async () => {
+const CavemanHook = async () => {
   return {
     'experimental.chat.messages.transform': async (_input, output) => {
       const bootstrap = buildBootstrap();
@@ -34,3 +34,5 @@ export const CavemanHook = async () => {
     },
   };
 };
+
+export default CavemanHook;

@@ -13,7 +13,7 @@ Do NOT load the git-worktree skill again after this first load — it persists f
 </GitWorktree_Context>`;
 }
 
-export const GitWorktreeHook = async () => {
+const GitWorktreeHook = async () => {
   return {
     'experimental.chat.messages.transform': async (_input, output) => {
       const bootstrap = buildBootstrap();
@@ -32,3 +32,5 @@ export const GitWorktreeHook = async () => {
     },
   };
 };
+
+export default GitWorktreeHook;

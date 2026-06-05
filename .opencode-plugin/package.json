@@ -1,15 +1,15 @@
 {
+  "dependencies": {},
   "exports": "./index.js",
   "files": [
     "index.js",
     "agents",
     "commands",
-    "skills"
+    "skills",
+    "hooks"
   ],
+  "main": "index.js",
   "name": "0xcraft-opencode-plugin",
-  "peerDependencies": {
-    "@opencode-ai/plugin": ">=1.0.0"
-  },
   "sideEffects": false,
   "type": "module",
   "version": "0.0.0"

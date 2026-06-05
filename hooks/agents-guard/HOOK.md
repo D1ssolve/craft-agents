@@ -18,20 +18,20 @@ actions:
       const MARKER = 'AGENTS_GUARD_INJECTED';
 
 
-      export const AgentsGuardPlugin = async ({ worktree, directory }) => {
+      const AgentsGuardPlugin = async ({ worktree, directory }) => {
         const projectRoot = worktree || directory || process.cwd();
 
         return {
           'experimental.chat.messages.transform': async (_input, output) => {
-            if (!output.messages?.length) return;
+            if (!output.messages?.length) return output;
 
             const alreadyInjected = output.messages.some((m) =>
               m.parts?.some((p) => p.type === 'text' && p.text?.includes(MARKER)),
             );
-            if (alreadyInjected) return;
+            if (alreadyInjected) return output;
 
             const agentsPath = path.join(projectRoot, 'AGENTS.md');
-            if (fs.existsSync(agentsPath)) return;
+            if (fs.existsSync(agentsPath)) return output;
 
             const notice = `<!-- ${MARKER} -->
       <RECOMMENDED_BASELINE>
@@ -62,13 +62,16 @@ actions:
       </RECOMMENDED_BASELINE>`;
 
             const firstUser = output.messages.find((m) => m.info?.role === 'user');
-            if (!firstUser?.parts?.length) return;
+            if (!firstUser?.parts?.length) return output;
 
             const referencePart = firstUser.parts[0];
             firstUser.parts.unshift({ ...referencePart, type: 'text', text: notice });
+            return output;
           },
         };
       };
+
+      export default AgentsGuardPlugin;
     runtime: opencode
     type: runtime_code
 description: "Imported OpenCode plugin: agents-guard"

@@ -76,45 +76,17 @@
       "description": "Scans .NET code for ~50 performance anti-patterns across async, memory, strings, collections, LINQ, regex, serialization, and I/O with tiered severity classification. Use when analyzing .NET code for optimization opportunities, reviewing hot paths, or auditing allocation-heavy patterns.",
       "name": "analyzing-dotnet-performance"
     },
-    "android-tombstone-symbolication": {
-      "description": "Symbolicate the .NET runtime frames in an Android tombstone file. Extracts BuildIds and PC offsets from the native backtrace, downloads debug symbols from the Microsoft symbol server, and runs llvm-symbolizer to produce function names with source file and line numbers. USE FOR triaging a .NET MAUI or Mono Android app crash from a tombstone, resolving native backtrace frames in libmonosgen-2.0.so or libcoreclr.so to .NET runtime source code, or investigating SIGABRT, SIGSEGV, or other native signals originating from the .NET runtime on Android. DO NOT USE FOR pure Java/Kotlin crashes, managed .NET exceptions that are already captured in logcat, or iOS crash logs. INVOKES Symbolicate-Tombstone.ps1 script, llvm-symbolizer, Microsoft symbol server.",
-      "name": "android-tombstone-symbolication"
-    },
-    "apple-crash-symbolication": {
-      "description": "Symbolicate .NET runtime frames in Apple platform .ips crash logs (iOS, tvOS, Mac Catalyst, macOS). Extracts UUIDs and addresses from the native backtrace, locates dSYM debug symbols, and runs atos to produce function names with source file and line numbers. Automatically downloads .dwarf symbols from the Microsoft symbol server using Mach-O UUIDs. USE FOR triaging a .NET MAUI or Mono app crash from an .ips file on any Apple platform, resolving native backtrace frames in libcoreclr or libmonosgen-2.0 to .NET runtime source code, retrieving .ips crash logs from a connected iOS device or iPhone, or investigating EXC_CRASH, EXC_BAD_ACCESS, SIGABRT, or SIGSEGV originating from the .NET runtime. DO NOT USE FOR pure Swift/Objective-C crashes with no .NET components, or Android tombstone files. INVOKES Symbolicate-Crash.ps1 script, atos, dwarfdump, idevicecrashreport.",
-      "name": "apple-crash-symbolication"
-    },
     "assertion-quality": {
       "description": "Analyzes the variety and depth of assertions across test suites in any language. Use when the user asks to evaluate assertion quality, find shallow testing, identify assertion-free tests (no assertions or only trivial ones like Assert.IsNotNull / expect(x).toBeTruthy() / assert x is not None), flag self-referential or tautological assertions (output equals input on identity/round-trip operations), measure assertion coverage diversity, or audit whether tests verify different facets of correctness. Produces metrics and actionable recommendations. Polyglot: .NET (MSTest/xUnit/NUnit/TUnit), Python (pytest/unittest), TS/JS (Jest/Vitest/Mocha/Jasmine/node:test), Java (JUnit/TestNG), Go, Ruby (RSpec/Minitest), Rust, Swift (XCTest/Swift Testing), Kotlin (JUnit/Kotest), PowerShell (Pester), C++ (GoogleTest/Catch2/doctest). DO NOT USE FOR: writing new tests (use code-testing-agent, or writing-mstest-tests for MSTest), anti-patterns like flakiness or duplication (use test-anti-patterns), fixing assertions.",
       "name": "assertion-quality"
-    },
-    "author-component": {
-      "description": "Create or review Blazor components (.razor files) with correct architecture. USE FOR: writing new Blazor components that do NOT involve JavaScript interop, implementing parameters and EventCallback, RenderFragment slots, component lifecycle (OnInitializedAsync, OnParametersSet), async patterns, IAsyncDisposable, CancellationToken, CSS isolation, code-behind. DO NOT USE FOR: creating new projects (use create-blazor-project), JavaScript interop or calling browser APIs from Blazor (use use-js-interop), forms and validation (use collect-user-input), prerendering issues (use support-prerendering), HTTP data fetching patterns (use fetch-and-send-data), coordinating state between unrelated components (use coordinate-components).\n",
-      "name": "author-component"
     },
     "binlog-failure-analysis": {
       "description": "Analyze MSBuild binary logs to diagnose build failures. Only activate in MSBuild/.NET build context. USE FOR: build errors that are unclear from console output, diagnosing cascading failures across multi-project builds, tracing MSBuild target execution order, and generally any MSBuild build issues. Requires an existing .binlog file. DO NOT USE FOR: generating binlogs (use binlog-generation), non-MSBuild build systems. INVOKES: binlog MCP server tools (overview, errors, search, items, properties); falls back to dotnet msbuild binlog replay + grep/cat when the MCP is unavailable.",
       "name": "binlog-failure-analysis"
     },
-    "binlog-generation": {
-      "description": "Generate MSBuild binary logs (binlogs) for build diagnostics and analysis. Only activate in MSBuild/.NET build context. USE FOR: adding /bl:{} to any dotnet build, test, pack, publish, or restore command to capture a full build execution trace, prerequisite for binlog-failure-analysis and build-perf-diagnostics skills, enabling post-build investigation of errors or performance. Requires MSBuild 17.8+ / .NET 8 SDK+ for {} placeholder; PowerShell needs -bl:{{}}. DO NOT USE FOR: non-MSBuild build systems (npm, Maven, CMake), analyzing an existing binlog (use binlog-failure-analysis instead). INVOKES: shell commands (dotnet build /bl:{}).",
-      "name": "binlog-generation"
-    },
     "brainstorming": {
       "description": "You MUST use this before any creative work - creating features, building components, adding functionality, or modifying behavior. Explores user intent, requirements and design before implementation.",
       "name": "brainstorming"
-    },
-    "build-parallelism": {
-      "description": "Guide for optimizing MSBuild build parallelism and multi-project scheduling. Only activate in MSBuild/.NET build context. USE FOR: builds not utilizing all CPU cores, speeding up multi-project solutions, evaluating graph build mode (/graph), build time not improving with -m flag, understanding project dependency topology. Note: /maxcpucount default is 1 (sequential) — always use -m for parallel builds. Covers /maxcpucount, graph build for better scheduling and isolation, BuildInParallel on MSBuild task, reducing unnecessary ProjectReferences, solution filters (.slnf) for building subsets. DO NOT USE FOR: single-project builds, incremental build issues (use incremental-build), compilation slowness within a project (use build-perf-diagnostics), non-MSBuild build systems. INVOKES: binlog MCP server tools (expensive_projects, expensive_targets, project_target_times); falls back to dotnet build -m, dotnet build /graph, binlog replay + grep.",
-      "name": "build-parallelism"
-    },
-    "build-perf-baseline": {
-      "description": "Establish build performance baselines and apply systematic optimization techniques. Only activate in MSBuild/.NET build context. USE FOR: diagnosing slow builds, establishing before/after measurements (cold, warm, no-op scenarios), applying optimization strategies like MSBuild Server, static graph builds, artifacts output, and dependency graph trimming. Start here before diving into build-perf-diagnostics, incremental-build, or build-parallelism. DO NOT USE FOR: non-MSBuild build systems, detailed bottleneck analysis (use build-perf-diagnostics after baselining).",
-      "name": "build-perf-baseline"
-    },
-    "build-perf-diagnostics": {
-      "description": "Diagnose MSBuild build performance bottlenecks using binary log analysis. Only activate in MSBuild/.NET build context. USE FOR: identifying why builds are slow by analyzing binlog performance summaries, detecting ResolveAssemblyReference (RAR) taking >5s, Roslyn analyzers consuming >30% of Csc time, single targets dominating >50% of build time, node utilization below 80%, excessive Copy tasks, NuGet restore running every build. Covers timeline analysis, Target/Task Performance Summary interpretation, and 7 common bottleneck categories. Use after build-perf-baseline has established measurements. DO NOT USE FOR: establishing initial baselines (use build-perf-baseline first), fixing incremental build issues (use incremental-build), parallelism tuning (use build-parallelism), non-MSBuild build systems. INVOKES: binlog MCP server tools (overview, errors, search, items, properties); falls back to dotnet msbuild binlog replay + grep/cat when the MCP is unavailable.",
-      "name": "build-perf-diagnostics"
     },
     "caveman": {
       "description": "Ultra-compressed communication mode. Cuts token usage ~75% by speaking like caveman while keeping full technical accuracy. Supports intensity levels: lite, full (default), ultra, wenyan-lite, wenyan-full, wenyan-ultra. Use when user says \"caveman mode\", \"talk like caveman\", \"use caveman\", \"less tokens\", \"be brief\", or invokes /caveman. Also auto-triggers when token efficiency is requested.\n",
@@ -124,37 +96,17 @@
       "description": "Generate and save LinkedIn-style engineering article when task contains non-default or user-requested work",
       "name": "chatgpt-linkedin-skill"
     },
-    "check-bin-obj-clash": {
-      "description": "Detects MSBuild projects with conflicting OutputPath or IntermediateOutputPath. Only activate in MSBuild/.NET build context. USE FOR: builds failing with 'Cannot create a file when that file already exists', 'The process cannot access the file because it is being used by another process', intermittent build failures that succeed on retry, missing outputs in multi-project builds, multi-targeting builds where project.assets.json conflicts. Diagnoses when multiple projects or TFMs write to the same bin/obj directories due to shared OutputPath, missing AppendTargetFrameworkToOutputPath, or extra global properties like PublishReadyToRun creating redundant evaluations. DO NOT USE FOR: file access errors unrelated to MSBuild (OS-level locking), single-project single-TFM builds, non-MSBuild build systems. INVOKES: binlog MCP server tools (overview, projects, evaluations, properties, double_writes); falls back to dotnet msbuild binlog replay + grep when the MCP is unavailable.",
-      "name": "check-bin-obj-clash"
-    },
-    "clr-activation-debugging": {
-      "description": "Diagnoses .NET Framework CLR activation issues using CLR activation logs (CLRLoad logs) produced by mscoree.dll. Use when: the shim picks the wrong runtime, fails to load any runtime, shows unexpected .NET 3.5 Feature-on-Demand (FOD) dialogs, unexpectedly does NOT show FOD dialogs, loads both v2 and v4 into the same process causing failures, or any time someone is wondering \"what is happening with .NET Framework activation?\"",
-      "name": "clr-activation-debugging"
-    },
     "code-review-orchestrator": {
       "description": "Orchestrates parallel code reviews. Selects mode based on change scope, launches focused sub-reviews via code-reviewer, aggregates into a unified verdict.",
       "name": "code-review-orchestrator"
     },
     "code-testing-agent": {
-      "description": "Generates and writes new unit tests for any programming language using a Research-Plan-Implement pipeline. Use when asked to generate tests, write unit tests, add tests, improve test coverage, create test project, achieve high coverage, comprehensive tests, or asked to scaffold a new test project for an app, service, or library. Supports C#, TypeScript, JavaScript, Python, Go, Rust, Java, and more. Orchestrates the code-testing-generator sub-agent through research, planning, and implementation phases so tests compile, pass, and follow project conventions. DO NOT USE FOR: running existing tests or test filters (use run-tests); diagnosing coverage plateaus or project-wide coverage/CRAP analysis without writing tests (use coverage-analysis); targeted method/class CRAP scores (use crap-score); MSTest assertion guidance, MSTest test pattern modernization, or fixing existing MSTest test code (use writing-mstest-tests).",
+      "description": "Generates and writes new unit tests for any programming language — scaffolds .NET test projects, pytest suites, Vitest/Jest suites, Go test files, and JUnit suites, and configures coverage tooling (coverlet, pytest-cov, @vitest/coverage-v8) as part of test generation. Use when asked to generate tests, generate pytest tests, generate Vitest tests, write unit tests, add tests, improve coverage, comprehensive tests, or scaffold a new test project or suite for an app, service, library, REST API, blueprint, or package — including project-wide, multi-file test generation across services, repositories, routes, and modules. Supports C#/.NET, Python (pytest, Flask/Django), TypeScript/JavaScript (Vitest, Jest, Mocha), Go, Rust, Java (JUnit). Runs a research, planning, and implementation pipeline so tests compile and pass. DO NOT USE FOR: running existing tests (use run-tests); analyzing existing coverage reports (use coverage-analysis or crap-score); MSTest modernization (use writing-mstest-tests).",
       "name": "code-testing-agent"
-    },
-    "code-testing-extensions": {
-      "description": "Provides file paths to language-specific extension files for the code-testing pipeline. Call this skill to discover available extension guidance files (e.g., dotnet.md for .NET, cpp.md for C++). Do not use directly — invoked by code-testing agents and skills that need language-specific references.",
-      "name": "code-testing-extensions"
-    },
-    "collect-user-input": {
-      "description": "Build forms, validate data, and react to user input in Blazor. USE FOR adding forms, search boxes, filter panels, inline editing, data-entry UI, file uploads, validation (annotations or custom), handling form submissions, and binding input controls. Covers EditForm, built-in input components, DataAnnotationsValidator, custom validation, SSR form patterns (SupplyParameterFromForm, FormName, AntiforgeryToken, Enhance), and @bind for simple interactive controls. DO NOT USE for project scaffolding (see create-blazor-project) or prerendering issues (see support-prerendering).",
-      "name": "collect-user-input"
     },
     "collection-codebase-patterns": {
       "description": "Use when changing Collection .NET layered app, especially export/session/plugin/DAL/Backend/BLL/S3 code; checklist prevents review mistakes around layer boundaries, exceptions, filters, constraints, streaming, and contracts.",
       "name": "collection-codebase-patterns"
-    },
-    "configure-auth": {
-      "description": "Add authentication and authorization to a Blazor Web App, accounting for the app's render mode. USE WHEN the user needs [Authorize] on pages, AuthorizeView, role or policy-based access, login/logout Identity pages, or AuthenticationStateProvider. Also USE WHEN auth state is null after WebAssembly loads, SignInManager throws in an interactive component, <NotAuthorized> content never renders in static SSR, or HttpContext.User is null in an interactive component. DO NOT USE for general component authoring (see author-component), for prerendering concerns unrelated to auth (see support-prerendering), or for managing non-auth cascading state (see coordinate-components).\n",
-      "name": "configure-auth"
     },
     "configuring-opentelemetry-dotnet": {
       "description": "Configure OpenTelemetry distributed tracing, metrics, and logging in ASP.NET Core using the .NET OpenTelemetry SDK. Use when adding observability, setting up OTLP exporters, creating custom metrics/spans, or troubleshooting distributed trace correlation.",
@@ -164,109 +116,13 @@
       "description": "Use this skill when you need up-to-date external library or framework documentation via MCP Context7. Best for implementation, architecture validation, and external contract verification. Triggers on tasks involving third-party SDKs, framework APIs, library configuration, version-specific syntax, or current docs/examples.",
       "name": "context7"
     },
-    "convert-blazor-server-to-webapp": {
-      "description": "Guides conversion of a pre-.NET 8 Blazor Server app into a .NET 8+ Blazor Web App. USE FOR: migrating apps that use AddServerSideBlazor and MapBlazorHub to the AddRazorComponents/MapRazorComponents model, converting _Host.cshtml to an App.razor root component, replacing blazor.server.js with blazor.web.js, migrating CascadingAuthenticationState to a service, adopting new Blazor Web App features like enhanced navigation and streaming rendering. DO NOT USE FOR: apps that are already Blazor Web Apps (already use AddRazorComponents and MapRazorComponents), Blazor WebAssembly or hosted Blazor WebAssembly apps (different migration path), apps that should stay on the Blazor Server hosting model without converting, or apps still targeting .NET Framework.\n",
-      "name": "convert-blazor-server-to-webapp"
-    },
-    "convert-to-cpm": {
-      "description": "Convert .NET projects and solutions (.sln, .slnx) to NuGet Central Package Management (CPM) using Directory.Packages.props. USE FOR: converting to CPM, centralizing or aligning NuGet package versions across multiple projects, inlining MSBuild version properties from Directory.Build.props into Directory.Packages.props, resolving version conflicts or mismatches across a solution or repository, updating or bumping or syncing package versions across projects. Also activate when packages are out of sync, drifting, or inconsistent -- even without the user mentioning CPM. Provides baseline build capture, version conflict resolution, build validation with binlog comparison, and a structured post-conversion report. DO NOT USE FOR: packages.config projects (must migrate to PackageReference first) or repositories that already have CPM fully enabled.\n",
-      "name": "convert-to-cpm"
-    },
-    "coordinate-components": {
-      "description": "Share state between components that don't have a direct parent-child parameter relationship, using cascading values, scoped services with change events, or CascadingValueSource via DI. USE WHEN the user needs a CascadingParameter or CascadingValue that works across render mode boundaries, a shopping cart or notification count accessible from multiple pages, a theme or user preference cascaded app-wide, or when components in different parts of the tree must react when shared data changes. Also USE WHEN cascading values aren't reaching interactive children in per-page interactivity mode, or when the user needs to understand scoped vs singleton service lifetime for state on Blazor Server. DO NOT USE for direct parent-child parameter passing or EventCallback (see author-component), for persisting state across prerender-to-interactive transitions (see support-prerendering), or for service abstractions for data fetching in Auto/WebAssembly (see fetch-and-send-data).\n",
-      "name": "coordinate-components"
-    },
-    "coverage-analysis": {
-      "description": "Project-wide code coverage and CRAP (Change Risk Anti-Patterns) score analysis for .NET projects. Calculates CRAP scores per method and surfaces risk hotspots — complex code with low coverage that is dangerous to modify. Use to diagnose why coverage is stuck or plateaued, identify what methods block improvement, or get project-wide coverage analysis with risk ranking. USE FOR: coverage stuck, coverage plateau, can't increase coverage, what's blocking coverage, coverage gap, CRAP scores, risk hotspots, where to add tests, coverage analysis, coverage report. DO NOT USE FOR: targeted single-method CRAP analysis (use crap-score), writing tests, running tests without coverage, or troubleshooting test execution (use run-tests).\n",
-      "name": "coverage-analysis"
-    },
-    "crap-score": {
-      "description": "Calculates targeted CRAP (Change Risk Anti-Patterns) scores for a named .NET method, class, or single source file. Use when the user explicitly asks to compute CRAP scores or assess risky untested code for a specific target, combining Cobertura coverage data with cyclomatic complexity analysis. DO NOT USE FOR: project-wide coverage analysis, coverage plateau or \"stuck coverage\" diagnosis, what's blocking coverage, or where to add tests across a project (use coverage-analysis); writing tests; running tests without CRAP context.\n",
-      "name": "crap-score"
-    },
-    "create-blazor-project": {
-      "description": "Create a new ASP.NET Core web application or web site using Blazor. USE FOR: creating a new Blazor web app, scaffolding a new web project, starting a new web site, choosing render modes (Static SSR, Interactive Server, Interactive WebAssembly, Auto), running dotnet new blazor with the right options, setting up initial project structure. DO NOT USE FOR: adding features to existing projects, changing how an existing app renders, or component authoring (use author-component).\n",
-      "name": "create-blazor-project"
-    },
-    "detect-static-dependencies": {
-      "description": "Scan C# source files for hard-to-test static dependencies — DateTime.Now/UtcNow, File.*, Directory.*, Environment.*, HttpClient, Console.*, Process.*, and other untestable statics. Produces a ranked report of static call sites by frequency. USE FOR: find untestable statics, scan for static dependencies, testability audit, identify hard-to-mock code, find DateTime.Now usage, detect static coupling, testability report, static analysis for testability. DO NOT USE FOR: generating wrappers (use generate-testability-wrappers), migrating code (use migrate-static-to-wrapper), general code review, or finding statics that are already behind abstractions.\n",
-      "name": "detect-static-dependencies"
-    },
-    "directory-build-organization": {
-      "description": "Guide for organizing MSBuild infrastructure with Directory.Build.props, Directory.Build.targets, Directory.Packages.props, and Directory.Build.rsp. Only activate in MSBuild/.NET build context. USE FOR: structuring multi-project repos, centralizing build settings, implementing NuGet Central Package Management (CPM) with ManagePackageVersionsCentrally, consolidating duplicated properties across .csproj files, setting up multi-level Directory.Build hierarchy with GetPathOfFileAbove, understanding evaluation order (Directory.Build.props → SDK .props → .csproj → SDK .targets → Directory.Build.targets). Critical pitfall: $(TargetFramework) conditions in .props silently fail for single-targeting projects — must use .targets. DO NOT USE FOR: non-MSBuild build systems, migrating legacy projects to SDK-style (use msbuild-modernization), single-project solutions with no shared settings. INVOKES: no tools — pure knowledge skill.",
-      "name": "directory-build-organization"
-    },
-    "dotnet-aot-compat": {
-      "description": "Make .NET projects compatible with Native AOT and trimming by systematically resolving IL trim/AOT analyzer warnings. USE FOR: making projects AOT-compatible, fixing trimming warnings, resolving IL warnings (IL2026, IL2070, IL2067, IL2072, IL3050), adding DynamicallyAccessedMembers annotations, enabling IsAotCompatible. DO NOT USE FOR: publishing native AOT binaries, optimizing binary size, replacing reflection-heavy libraries with alternatives. INVOKES: no tools — pure knowledge skill.\n",
-      "name": "dotnet-aot-compat"
-    },
     "dotnet-csharp-scripts": {
       "description": "Run single-file C# programs as scripts for quick experimentation, prototyping, and concept testing. Use when the user wants to write and execute a small disposable C# program without creating a full project or modifying an existing solution.",
       "name": "csharp-scripts"
     },
-    "dotnet-maui-doctor": {
-      "description": "Diagnoses and fixes .NET MAUI development environment issues. Validates .NET SDK, workloads, Java JDK, Android SDK, Xcode, and Windows SDK. All version requirements discovered dynamically from NuGet WorkloadDependencies.json — never hardcoded. Use when: setting up MAUI development, build errors mentioning SDK/workload/JDK/Android, \"Android SDK not found\", \"Java version\" errors, \"Xcode not found\", environment verification after updates, or any MAUI toolchain issues. Do not use for: non-MAUI .NET projects, Xamarin.Forms apps, runtime app crashes unrelated to environment setup, or app store publishing issues. Works on macOS, Windows, and Linux.",
-      "name": "dotnet-maui-doctor"
-    },
-    "dotnet-microbenchmarking": {
-      "description": "Activate this skill when BenchmarkDotNet (BDN) is involved in the task — creating, running, configuring, or reviewing BDN benchmarks. Also activate when microbenchmarking .NET code would be useful and BenchmarkDotNet is the likely tool. Consider activating when answering a .NET performance question requires measurement and BenchmarkDotNet may be needed. Covers microbenchmark design, BDN configuration and project setup, how to run BDN microbenchmarks efficiently and effectively, and using BDN for side-by-side performance comparisons. Do NOT use for profiling/tracing .NET code (dotnet-trace, PerfView), production telemetry, or load/stress testing (Crank, k6).\n",
-      "name": "microbenchmarking"
-    },
-    "dotnet-migrate-dotnet9-to-dotnet10": {
-      "description": "Migrate a .NET 9 project or solution to .NET 10 and resolve all breaking changes. USE FOR: upgrading TargetFramework from net9.0 to net10.0, fixing build errors after updating the .NET 10 SDK, resolving .NET 10 / C# 14 / ASP.NET Core 10 / EF Core 10 breaking changes, SDK/NuGet and container changes, new obsoletion warnings, and common migrations such as System.Linq.Async to AsyncEnumerable. Prefer project diagnostics/build checks and project test checks for verification; use shell restore/build/test only when the user explicitly requests raw CLI output or structured tooling fails twice with the same infrastructure error. DO NOT USE FOR: .NET Framework migrations, upgrading from .NET 8 or earlier (use migrate-dotnet8-to-dotnet9 first), greenfield .NET 10 projects, or cosmetic modernization. LOADS REFERENCES: csharp-compiler, core-libraries, sdk-msbuild (always); aspnet-core, efcore, cryptography, extensions-hosting, serialization-networking, winforms-wpf, containers-interop (selective).\n",
-      "name": "migrate-dotnet9-to-dotnet10"
-    },
-    "dotnet-pinvoke": {
-      "description": "Correctly call native (C/C++) libraries from .NET using P/Invoke and LibraryImport. Covers function signatures, string marshalling, memory lifetime, SafeHandle, and cross-platform patterns. USE FOR: writing new P/Invoke or LibraryImport declarations, reviewing or debugging existing native interop code, wrapping a C or C++ library for use in .NET, diagnosing crashes, memory leaks, or corruption at the managed/native boundary. DO NOT USE FOR: COM interop, C++/CLI mixed-mode assemblies, or pure managed code with no native dependencies.\n",
-      "name": "dotnet-pinvoke"
-    },
-    "dotnet-test-frameworks": {
-      "description": "Reference data for .NET test framework detection patterns, assertion APIs, skip annotations, setup/teardown methods, and common test smell indicators across MSTest, xUnit, NUnit, and TUnit. Loaded by test analysis skills (test-anti-patterns) as framework-specific lookup tables.",
-      "name": "dotnet-test-frameworks"
-    },
-    "dotnet-trace-collect": {
-      "description": "Guide developers through capturing diagnostic artifacts to diagnose production .NET performance issues. Use when the user needs help choosing diagnostic tools, collecting performance data, or understanding tool trade-offs across different environments (Windows/Linux, .NET Framework/modern .NET, container/non-container).",
-      "name": "dotnet-trace-collect"
-    },
     "dotnet-webapi": {
       "description": "Guides creation and modification of ASP.NET Core Web API endpoints with correct HTTP semantics, OpenAPI metadata, and error handling. USE FOR: adding new API endpoints (controllers or minimal APIs), wiring up OpenAPI/Swagger, creating .http test files, setting up global error handling middleware. DO NOT USE FOR: general C# coding style, EF Core data access or query optimization (use optimizing-ef-core-queries), frontend/Blazor work, gRPC services, or SignalR hubs.\n",
       "name": "dotnet-webapi"
-    },
-    "dump-collect": {
-      "description": "Configure and collect crash dumps for modern .NET applications. USE FOR: enabling automatic crash dumps for CoreCLR or NativeAOT, capturing dumps from running .NET processes, setting up dump collection in Docker or Kubernetes, using dotnet-dump collect or createdump. DO NOT USE FOR: analyzing or debugging dumps, post-mortem investigation with lldb/windbg/dotnet-dump analyze, profiling or tracing, or for .NET Framework processes.",
-      "name": "dump-collect"
-    },
-    "eval-performance": {
-      "description": "Guide for diagnosing and improving MSBuild project evaluation performance. Only activate in MSBuild/.NET build context. USE FOR: builds slow before any compilation starts, high evaluation time in binlog analysis, expensive glob patterns walking large directories (node_modules, .git, bin/obj), deep import chains (>20 levels), preprocessed output >10K lines indicating heavy evaluation, property functions with file I/O ($([System.IO.File]::ReadAllText(...))), multiple evaluations per project. Covers the 5 MSBuild evaluation phases, glob optimization via DefaultItemExcludes, import chain analysis with /pp preprocessing. DO NOT USE FOR: compilation-time slowness (use build-perf-diagnostics), incremental build issues (use incremental-build), non-MSBuild build systems. INVOKES: binlog MCP server tools (evaluations, evaluation_global_properties, evaluation_properties, imports, properties); falls back to dotnet msbuild -pp:full.xml for preprocessing, /clp:PerformanceSummary.",
-      "name": "eval-performance"
-    },
-    "exp-mock-usage-analysis": {
-      "description": "Audits .NET test mock usage by tracing each mock setup through the production code's execution path to find dead, unreachable, redundant, or replaceable mocks. Use when the user asks to audit mock usage, find unused or unnecessary mock setups, check if mocks are needed, reduce mock duplication or over-mocking, simplify test setup, or review whether mock configurations like ILogger/IOptions should use real implementations instead. Supports Moq, NSubstitute, and FakeItEasy.",
-      "name": "exp-mock-usage-analysis"
-    },
-    "exp-simd-vectorization": {
-      "description": "Optimizes hot-path scalar loops in .NET 8+ with cross-platform Vector128/Vector256/Vector512 SIMD intrinsics, or replaces manual math loops with single TensorPrimitives API calls. Covers byte-range validation, character counting, bulk bitwise ops, cross-type conversion, fused multi-array computations, and float/double math operations.",
-      "name": "exp-simd-vectorization"
-    },
-    "exp-test-maintainability": {
-      "description": "Detects duplicate boilerplate, copy-paste tests, and structural maintainability issues across .NET test suites. Use when the user asks to reduce repetition, consolidate similar test methods, convert copy-paste tests to data-driven parameterized tests, suggest a better test structure, or identify refactoring opportunities. Identifies repeated construction, assertion patterns, copy-paste methods convertible to DataRow/Theory/TestCase, redundant setup/teardown, and shared infrastructure. Produces an analysis report with concrete before/after suggestions. Works with MSTest, xUnit, NUnit, and TUnit. DO NOT USE FOR: writing new tests (use writing-mstest-tests), reviewing test quality or anti-patterns (use test-anti-patterns), or deep mock auditing (use exp-mock-usage-analysis).",
-      "name": "exp-test-maintainability"
-    },
-    "extension-points": {
-      "description": "Guide for MSBuild extensibility: CustomBefore/CustomAfter hooks, wildcard imports with alphabetic ordering, import gating with control properties, NuGet package build extension layout (build/buildTransitive), and the MicrosoftCommonPropsHasBeenImported guard. Only activate in MSBuild/.NET build context. USE FOR: diagnosing and fixing MSBuild import and hook patterns, reviewing and fixing extension point anti-patterns in Directory.Build files, fixing missing Exists() guards on imports that break fresh clones, fixing NuGet package hooks being silently dropped instead of appended, making build targets extensible for other projects, injecting custom logic into the build pipeline, creating NuGet packages that extend the build, conditionally disabling imports. DO NOT USE FOR: target authoring patterns (use target-authoring), props vs targets placement (use directory-build-organization), general anti-patterns (use msbuild-antipatterns), non-MSBuild build systems.",
-      "name": "extension-points"
-    },
-    "fetch-and-send-data": {
-      "description": "Call APIs, load data into components, and handle the async lifecycle in Blazor. USE FOR fetching data from a backend, submitting data to an API, displaying loading/error states, registering HttpClient, building service abstractions for Auto/WebAssembly render modes. DO NOT USE for form validation (see collect-user-input), prerendering persistence (see support-prerendering), or project scaffolding (see create-blazor-project).",
-      "name": "fetch-and-send-data"
-    },
-    "filter-syntax": {
-      "description": "Reference data for test filter syntax across all platform and framework combinations: VSTest --filter expressions, MTP filters for MSTest/NUnit/xUnit v3/TUnit, and VSTest-to-MTP filter translation. DO NOT USE directly — loaded by run-tests, mtp-hot-reload, and migrate-vstest-to-mtp when they need filter syntax.",
-      "name": "filter-syntax"
-    },
-    "generate-testability-wrappers": {
-      "description": "Generate wrapper interfaces and DI registration for hard-to-test static dependencies in C#. Produces IFileSystem, IEnvironmentProvider, IConsole, IProcessRunner wrappers, or guides adoption of TimeProvider and IHttpClientFactory. USE FOR: generate wrapper for static, create IFileSystem wrapper, wrap DateTime.Now, make static testable, make class testable, create abstraction for File.*, generate DI registration, TimeProvider adoption, IHttpClientFactory setup, testability wrapper, mock-friendly interface, mock time in tests, create the right abstraction to mock, how to mock DateTime, test code using File.ReadAllText, what abstraction for Environment, how to make statics injectable, adopt System.IO.Abstractions, make file calls testable. DO NOT USE FOR: detecting statics (use detect-static-dependencies), migrating call sites (use migrate-static-to-wrapper), general interface design not about testability.\n",
-      "name": "generate-testability-wrappers"
     },
     "git-worktree": {
       "description": "Git worktree context awareness. Auto-activates when project is inside a .tasks task folder with git worktrees. Teaches agents about worktree structure, sibling services, and worktree-specific git behavior. Prevents agents from operating on the main repository instead of the worktree copy.\n",
@@ -276,161 +132,29 @@
       "description": "Concrete implementation patterns and techniques for .NET backend systems. Use when implementing any of: background worker task claiming that must survive pod kills or DB outages (lease/heartbeat pattern); race-free duplicate detection without pre-check queries; streaming large file exports without MemoryStream. Triggers on: lease pattern, LockToken, LockedUntil, heartbeat worker, background job, task queue DB, crash-safe processing, distributed lock, stale task recovery, unique constraint conflict, CommitResult, duplicate active record, HasActiveExport, streaming export, temp file upload, MemoryStream OOM, IAsyncEnumerable export, FOR UPDATE SKIP LOCKED.\n",
       "name": "implementation-patterns"
     },
-    "including-generated-files": {
-      "description": "Fix MSBuild targets that generate files during the build but those files are missing from compilation or output. Only activate in MSBuild/.NET build context. USE FOR: generated source files not compiling (CS0246 for a type that should exist), custom build tasks that create files but they are invisible to subsequent targets, globs not capturing build-generated files because they expand at evaluation time before execution creates them, ensuring generated files are cleaned by the Clean target. Covers correct BeforeTargets timing (CoreCompile, BeforeBuild, AssignTargetPaths), adding to Compile/FileWrites item groups, using $(IntermediateOutputPath) instead of hardcoded obj/ paths. DO NOT USE FOR: C# source generators that already work via the Roslyn pipeline, T4 design-time generation that runs in Visual Studio, non-MSBuild build systems. INVOKES: no tools — pure knowledge skill.",
-      "name": "including-generated-files"
-    },
-    "incremental-build": {
-      "description": "Guide for optimizing MSBuild incremental builds. Only activate in MSBuild/.NET build context. USE FOR: builds slower than expected on subsequent runs, 'nothing changed but it rebuilds anyway', diagnosing why targets re-execute unnecessarily, fixing broken no-op builds. Covers 8 common causes: missing Inputs/Outputs on custom targets, volatile properties in output paths (timestamps/GUIDs), file writes outside tracked Outputs, missing FileWrites registration, glob changes, Visual Studio Fast Up-to-Date Check (FUTDC) issues. Key diagnostic: look for 'Building target completely' vs 'Skipping target' in binlog. DO NOT USE FOR: first-time build slowness (use build-perf-baseline), parallelism issues (use build-parallelism), evaluation-phase slowness (use eval-performance), non-MSBuild build systems. INVOKES: binlog MCP server tools (overview, search, target details); falls back to dotnet build /bl, binlog replay with diagnostic verbosity.",
-      "name": "incremental-build"
-    },
-    "item-management": {
-      "description": "Patterns for managing MSBuild item groups: Include/Remove/Update semantics, item metadata, batching with %(Metadata), transforms, per-item filtering, and cross-product batching pitfalls. Only activate in MSBuild/.NET build context. USE FOR: diagnosing and fixing item group anti-patterns in .csproj files, reviewing item management for correctness, fixing CS2002 duplicate file warnings from SDK globbing, fixing targets that run more times than expected due to cross-product batching, fixing Include vs Update misuse on SDK-globbed items, fixing FileWrites registration for generated file clean support, moving generated files to IntermediateOutputPath. DO NOT USE FOR: target chain architecture (use target-authoring), property patterns (use property-patterns), incrementality (use incremental-build), general anti-patterns (use msbuild-antipatterns), non-MSBuild build systems.",
-      "name": "item-management"
-    },
-    "maui-app-lifecycle": {
-      "description": ".NET MAUI app lifecycle guidance — the four app states, cross-platform Window lifecycle events (Created, Activated, Deactivated, Stopped, Resumed, Destroying), platform-specific lifecycle mapping, backgrounding and resume behavior, and state-preservation patterns. USE FOR: \"app lifecycle\", \"window lifecycle events\", \"save state on background\", \"resume app\", \"OnStopped\", \"OnResumed\", \"backgrounding\", \"deactivated event\", \"ConfigureLifecycleEvents\", \"platform lifecycle hooks\". DO NOT USE FOR: navigation events (use maui-shell-navigation), dependency injection setup (use maui-dependency-injection), platform API invocation (use conditional compilation and partial classes).",
-      "name": "maui-app-lifecycle"
-    },
-    "maui-collectionview": {
-      "description": "Guidance for implementing CollectionView in .NET MAUI apps — data display, layouts (list & grid), selection, grouping, scrolling, empty views, templates, incremental loading, swipe actions, and pull-to-refresh. USE FOR: \"CollectionView\", \"list view\", \"grid layout\", \"data template\", \"item template\", \"grouping\", \"pull to refresh\", \"incremental loading\", \"swipe actions\", \"empty view\", \"selection mode\", \"scroll to item\", displaying scrollable data, replacing ListView. DO NOT USE FOR: simple static layouts without scrollable data (use Grid or StackLayout), map pin lists (use Microsoft.Maui.Controls.Maps), table-based data entry forms, or non-MAUI list controls.\n",
-      "name": "maui-collectionview"
-    },
-    "maui-data-binding": {
-      "description": "Guidance for .NET MAUI XAML and C# data bindings — compiled bindings, INotifyPropertyChanged / ObservableObject, value converters, binding modes, multi-binding, relative bindings, fallbacks, and MVVM best practices. USE FOR: setting up compiled bindings with x:DataType, implementing INotifyPropertyChanged or CommunityToolkit ObservableObject, creating IValueConverter / IMultiValueConverter, choosing binding modes, configuring BindingContext, relative bindings, binding fallbacks, StringFormat, code-behind SetBinding with lambdas, and enforcing XC0022/XC0025 warnings. DO NOT USE FOR: CollectionView item templates and layouts (use maui-collectionview), Shell navigation data passing (use maui-shell-navigation), dependency injection (use maui-dependency-injection), or animations triggered by property changes (use .NET MAUI animation APIs).",
-      "name": "maui-data-binding"
-    },
-    "maui-dependency-injection": {
-      "description": "Guidance for configuring dependency injection in .NET MAUI apps — service registration in MauiProgram.cs, lifetime selection (Singleton / Transient / Scoped), constructor injection, Shell navigation auto-resolution, platform-specific registrations, and testability patterns. USE FOR: \"dependency injection\", \"DI setup\", \"AddSingleton\", \"AddTransient\", \"AddScoped\", \"service registration\", \"constructor injection\", \"IServiceProvider\", \"MauiProgram DI\", \"register services\", \"BindingContext injection\". DO NOT USE FOR: data binding (use maui-data-binding), Shell route configuration (use maui-shell-navigation), unit-test mocking frameworks (use standard xUnit and NSubstitute patterns).\n",
-      "name": "maui-dependency-injection"
-    },
-    "maui-safe-area": {
-      "description": ".NET MAUI safe area and edge-to-edge layout guidance for .NET 10+. Covers the new SafeAreaEdges property, SafeAreaRegions enum, per-edge control, keyboard avoidance, Blazor Hybrid CSS safe areas, migration from legacy iOS-only APIs, and platform-specific behavior for Android, iOS, and Mac Catalyst. USE FOR: \"safe area\", \"edge-to-edge\", \"SafeAreaEdges\", \"SafeAreaRegions\", \"keyboard avoidance\", \"notch insets\", \"status bar overlap\", \"iOS safe area\", \"Android edge-to-edge\", \"content behind status bar\", \"UseSafeArea migration\", \"soft input keyboard\", \"IgnoreSafeArea replacement\". DO NOT USE FOR: general layout or grid design (use Grid and StackLayout), app lifecycle handling (use maui-app-lifecycle), theming or styling (use maui-theming), or Shell navigation structure.",
-      "name": "maui-safe-area"
-    },
-    "maui-shell-navigation": {
-      "description": "Guide for implementing Shell-based navigation in .NET MAUI apps. Covers AppShell setup, visual hierarchy (FlyoutItem, TabBar, Tab, ShellContent), URI-based navigation with GoToAsync, route registration, query parameters, back navigation, flyout and tab configuration, navigation events, and navigation guards. Use when: setting up Shell navigation, adding tabs or flyout menus, navigating between pages with GoToAsync, passing parameters between pages, registering routes, customizing back button behavior, or guarding navigation with confirmation dialogs. Do not use for: deep linking from external URLs (see .NET MAUI deep linking documentation), data binding on pages (use maui-data-binding), dependency injection setup (use maui-dependency-injection), or NavigationPage-only apps that don't use Shell.",
-      "name": "maui-shell-navigation"
-    },
-    "maui-theming": {
-      "description": "Guide for theming .NET MAUI apps — light/dark mode via AppThemeBinding, ResourceDictionary theme switching, DynamicResource bindings, system theme detection, and user theme preferences. Use when: \"dark mode\", \"light mode\", \"theming\", \"AppThemeBinding\", \"theme switching\", \"ResourceDictionary theme\", \"dynamic resources\", \"system theme detection\", \"color scheme\", \"app theme\", \"DynamicResource\". Do not use for: localization or language switching (see .NET MAUI localization documentation), accessibility visual adjustments (see .NET MAUI accessibility documentation), app icons or splash screens (see .NET MAUI app icons documentation), or Bootstrap-style class theming (see Plugin.Maui.BootstrapTheme NuGet package).",
-      "name": "maui-theming"
-    },
-    "mcp-csharp-create": {
-      "description": "Create MCP servers using the C# SDK and .NET project templates. Covers scaffolding, tool/prompt/resource implementation, and transport configuration for stdio and HTTP. USE FOR: creating new MCP server projects, scaffolding with dotnet new mcpserver, adding MCP tools/prompts/resources, choosing stdio vs HTTP transport, configuring MCP hosting in Program.cs, setting up ASP.NET Core MCP endpoints with MapMcp. DO NOT USE FOR: debugging or running existing servers (use mcp-csharp-debug), writing tests (use mcp-csharp-test), publishing or deploying (use mcp-csharp-publish), building MCP clients, non-.NET MCP servers.\n",
-      "name": "mcp-csharp-create"
-    },
-    "mcp-csharp-debug": {
-      "description": "Run and debug C# MCP servers locally. Covers IDE configuration, MCP Inspector testing, GitHub Copilot Agent Mode integration, logging setup, and troubleshooting. USE FOR: running MCP servers locally with dotnet run, configuring VS Code or Visual Studio for MCP debugging, testing tools with MCP Inspector, testing with GitHub Copilot Agent Mode, diagnosing tool registration issues, setting up mcp.json configuration, debugging MCP protocol messages, configuring logging for stdio and HTTP servers. DO NOT USE FOR: creating new MCP servers (use mcp-csharp-create), writing automated tests (use mcp-csharp-test), publishing or deploying to production (use mcp-csharp-publish).\n",
-      "name": "mcp-csharp-debug"
-    },
-    "mcp-csharp-publish": {
-      "description": "Publish and deploy C# MCP servers. Covers NuGet packaging for stdio servers, Docker containerization for HTTP servers, Azure Container Apps and App Service deployment, and publishing to the official MCP Registry. USE FOR: packaging stdio MCP servers as NuGet tools, creating Dockerfiles for HTTP MCP servers, deploying to Azure Container Apps or App Service, publishing to the MCP Registry at registry.modelcontextprotocol.io, configuring server.json for MCP package metadata, setting up CI/CD for MCP server publishing. DO NOT USE FOR: publishing general NuGet libraries (not MCP-specific), general Docker guidance unrelated to MCP, creating new servers (use mcp-csharp-create), debugging (use mcp-csharp-debug), writing tests (use mcp-csharp-test).\n",
-      "name": "mcp-csharp-publish"
-    },
-    "mcp-csharp-test": {
-      "description": "Test C# MCP servers at multiple levels: unit tests for individual tools and integration tests using the MCP client SDK. USE FOR: unit testing MCP tool methods, integration testing with in-memory MCP client/server, end-to-end testing via MCP protocol, testing HTTP MCP servers with WebApplicationFactory, mocking dependencies in tool tests, creating evaluations for MCP servers, writing eval questions, measuring tool quality. DO NOT USE FOR: testing MCP clients (this is server testing only), load or performance testing, testing non-.NET MCP servers, debugging server issues (use mcp-csharp-debug).\n",
-      "name": "mcp-csharp-test"
-    },
     "mempalace": {
       "description": "Use this skill whenever the user asks about mempalace CLI commands, how to run mempalace, how to use mempalace MCP server, or anything related to mempalace memory system. This skill encodes the correct way to run mempalace via uvx in this specific setup — where mempalace is NOT globally installed and must always be invoked through uvx. Trigger on any mention of: mempalace, memory palace, mcp server mempalace, mine convos, palace status, or any mempalace subcommand.\n",
       "name": "mempalace"
-    },
-    "migrate-dotnet10-to-dotnet11": {
-      "description": "Migrate a .NET 10 project or solution to .NET 11 and resolve all breaking changes. This is a MIGRATION skill — use it when upgrading from .NET 10 to .NET 11, NOT for writing new programs. USE FOR: upgrading TargetFramework from net10.0 to net11.0, fixing build errors after updating the .NET 11 SDK, resolving source-breaking and behavioral changes in .NET 11 runtime, C# 15 compiler, and EF Core 11, adapting to updated minimum hardware requirements (x86-64-v2, Arm64 LSE), and updating CI/CD pipelines and Dockerfiles for .NET 11. DO NOT USE FOR: .NET Framework migrations, upgrading from .NET 9 or earlier, greenfield .NET 11 projects, or cosmetic modernization unrelated to the upgrade. NOTE: .NET 11 is in preview. Covers breaking changes through Preview 3.\n",
-      "name": "migrate-dotnet10-to-dotnet11"
-    },
-    "migrate-dotnet8-to-dotnet9": {
-      "description": "Migrate a .NET 8 project to .NET 9 and resolve all breaking changes. USE FOR: upgrading TargetFramework from net8.0 to net9.0, fixing build errors after updating the .NET 9 SDK, resolving behavioral changes in .NET 9 / C# 13 / ASP.NET Core 9 / EF Core 9, replacing BinaryFormatter (now always throws), resolving SYSLIB0054-SYSLIB0057, adapting to params span overload resolution, fixing C# 13 compiler changes, updating HttpClientFactory for SocketsHttpHandler, and resolving EF Core 9 migration/Cosmos DB changes. DO NOT USE FOR: .NET Framework migrations, upgrading from .NET 7 or earlier, greenfield .NET 9 projects, or cosmetic modernization unrelated to the upgrade.\n",
-      "name": "migrate-dotnet8-to-dotnet9"
-    },
-    "migrate-mstest-v1v2-to-v3": {
-      "description": "Migrate MSTest v1 or v2 test project to MSTest v3. Use when user says \"upgrade MSTest\", \"upgrade to MSTest v3\", \"migrate to MSTest v3\", \"update test framework\", \"modernize tests\", \"MSTest v3 migration\", \"MSTest compatibility\", \"MSTest v2 to v3\", or build errors after updating MSTest packages from 1.x/2.x to 3.x. USE FOR: upgrading from MSTest v1 assembly references (Microsoft.VisualStudio.QualityTools.UnitTestFramework) or MSTest v2 NuGet (MSTest.TestFramework 1.x-2.x) to MSTest v3, fixing assertion overload errors (AreEqual/AreNotEqual), updating DataRow constructors, replacing .testsettings with .runsettings, timeout behavior changes, target framework compatibility (.NET 5 dropped -- use .NET 6+; .NET Fx older than 4.6.2 dropped), adopting MSTest.Sdk. First step toward MSTest v4 -- after this, use migrate-mstest-v3-to-v4. DO NOT USE FOR: migrating to MSTest v4 (use migrate-mstest-v3-to-v4), migrating between frameworks (MSTest to xUnit/NUnit), or general .NET upgrades unrelated to MSTest.\n",
-      "name": "migrate-mstest-v1v2-to-v3"
-    },
-    "migrate-mstest-v3-to-v4": {
-      "description": "Fix build errors and breaking changes after upgrading MSTest from v3 to v4, or plan a complete MSTest v3-to-v4 migration. Use when user says \"upgrade to MSTest v4\", \"MSTest 4 migration\", \"MSTest v4 breaking changes\", \"tests don't compile after upgrading MSTest\", or has errors CS0507, CS0103, CS1061, CS1615 after updating MSTest packages from 3.x to 4.x. USE FOR: Execute to ExecuteAsync, CallerInfo constructor on TestMethodAttribute, sealed custom attributes, ClassCleanupBehavior removal, TestContext.Properties Contains to ContainsKey, Assert.ThrowsException to ThrowsExactly, Assert.IsInstanceOfType out parameter removal, ExpectedExceptionAttribute removal, TestTimeout enum removal, [TestMethod(\"name\")] to DisplayName syntax, TreatDiscoveryWarningsAsErrors, TestContext.TestName in ClassInitialize, MSTest.Sdk MTP changes, dropped TFMs (net6.0/net7.0 to net8.0+). DO NOT USE FOR: migrating from MSTest v1/v2 to v3 (use migrate-mstest-v1v2-to-v3 first), migrating between test frameworks, or general .NET upgrades.\n",
-      "name": "migrate-mstest-v3-to-v4"
-    },
-    "migrate-nullable-references": {
-      "description": "Enable nullable reference types in a C# project and systematically resolve all warnings. USE FOR: adopting NRTs in existing codebases, file-by-file or project-wide migration, fixing CS8602/CS8618/CS86xx warnings, annotating APIs for nullability, cleaning up null-forgiving operators, upgrading dependencies with new nullable annotations. DO NOT USE FOR: projects already fully migrated with zero warnings (unless auditing suppressions), fixing a handful of nullable warnings in code that already has NRTs enabled, suppressing warnings without fixing them, C# 7.3 or earlier projects. INVOKES: Get-NullableReadiness.ps1 scanner script.\n",
-      "name": "migrate-nullable-references"
-    },
-    "migrate-static-to-wrapper": {
-      "description": "Mechanically replace static dependency call sites with wrapper or built-in abstraction calls across a bounded scope (file, project, or namespace). Performs codemod-style bulk replacement of DateTime.UtcNow to TimeProvider.GetUtcNow(), File.ReadAllText to IFileSystem, and similar transformations. Adds constructor injection parameters and updates DI registration. USE FOR: replace DateTime.UtcNow with TimeProvider, replace DateTime.Now with TimeProvider, migrate static calls to wrapper, bulk replace File.* with IFileSystem, codemod static to injectable, add constructor injection for time provider, mechanical migration of statics, refactor DateTime to TimeProvider, swap static for injected dependency, convert static calls to use abstraction, replace statics in a class, migrate one file to TimeProvider, scoped migration, update call sites. DO NOT USE FOR: detecting statics (use detect-static-dependencies), generating wrappers (use generate-testability-wrappers), migrating between test frameworks.\n",
-      "name": "migrate-static-to-wrapper"
-    },
-    "migrate-vstest-to-mtp": {
-      "description": "Migrates .NET test projects from VSTest to Microsoft.Testing.Platform (MTP). Use when user asks to \"migrate to MTP\", \"switch from VSTest\", \"enable Microsoft.Testing.Platform\", \"use MTP runner\", or mentions EnableMSTestRunner, EnableNUnitRunner, or UseMicrosoftTestingPlatformRunner. USE FOR: MTP behavioral differences vs VSTest (exit code 8, zero tests discovered, --ignore-exit-code, TESTINGPLATFORM_EXITCODE_IGNORE), conditioning OutputType=Exe to test projects when centralizing MTP properties in Directory.Build.props. Supports MSTest, NUnit, xUnit.net v2 (via YTest.MTP.XUnit2), and xUnit.net v3 (native MTP). Covers runner enablement, CLI argument translation, xUnit.net v3 filter migration (--filter-class, --filter-trait, --filter-query), Directory.Build.props and global.json config, CI/CD pipeline updates, and MTP extension packages. DO NOT USE FOR: migrating between test frameworks (MSTest/xUnit/NUnit), xUnit.net v2 to v3 API migration, MSTest version upgrades, TFM upgrades, or UWP/WinUI test projects.\n",
-      "name": "migrate-vstest-to-mtp"
-    },
-    "migrate-xunit-to-xunit-v3": {
-      "description": "Migrates .NET test projects from xUnit.net v2 to xUnit.net v3. USE FOR: upgrading xunit to xunit.v3. DO NOT USE FOR: migrating between test frameworks (MSTest/NUnit to xUnit.net), migrating from VSTest to Microsoft.Testing.Platform (use migrate-vstest-to-mtp). For xUnit v3 MTP filter syntax (--filter-class, --filter-trait, --filter-query), also load migrate-vstest-to-mtp.\n",
-      "name": "migrate-xunit-to-xunit-v3"
-    },
-    "minimal-api-file-upload": {
-      "description": "File upload endpoints in ASP.NET minimal APIs (.NET 8+)",
-      "name": "minimal-api-file-upload"
-    },
-    "msbuild-antipatterns": {
-      "description": "Catalog of MSBuild anti-patterns with detection rules and fix recipes. Only activate in MSBuild/.NET build context. USE FOR: reviewing, auditing, or cleaning up .csproj, .vbproj, .fsproj, .props, .targets, or .proj files. Each anti-pattern has a symptom, explanation, and concrete BAD→GOOD transformation. Covers Exec-instead-of-built-in-task, unquoted conditions, hardcoded paths, restating SDK defaults, scattered package versions, and more. DO NOT USE FOR: non-MSBuild build systems (npm, Maven, CMake, etc.), project migration to SDK-style (use msbuild-modernization).",
-      "name": "msbuild-antipatterns"
-    },
-    "msbuild-modernization": {
-      "description": "Guide for modernizing and migrating MSBuild project files to SDK-style format. Only activate in MSBuild/.NET build context. USE FOR: converting legacy .csproj/.vbproj with verbose XML to SDK-style, migrating packages.config to PackageReference, removing Properties/AssemblyInfo.cs in favor of auto-generation, eliminating explicit <Compile Include> lists via implicit globbing, consolidating shared settings into Directory.Build.props. Indicators of legacy projects: ToolsVersion attribute, <Import Project=\"$(MSBuildToolsPath)\">, .csproj files > 50 lines for simple projects. DO NOT USE FOR: projects already in SDK-style format, non-.NET build systems (npm, Maven, CMake), .NET Framework projects that cannot move to SDK-style. INVOKES: dotnet try-convert, upgrade-assistant tools.",
-      "name": "msbuild-modernization"
-    },
-    "msbuild-server": {
-      "description": "Guide for using MSBuild Server to improve CLI build performance. Only activate in MSBuild/.NET build context. Activate when developers report slow incremental builds from the command line, or when CLI builds are noticeably slower than IDE builds. Covers MSBUILDUSESERVER=1 environment variable for persistent server-based caching. Do not activate for IDE-based builds (Visual Studio already uses a long-lived process).",
-      "name": "msbuild-server"
-    },
-    "mtp-hot-reload": {
-      "description": "Suggests using Microsoft Testing Platform (MTP) hot reload to iterate fixes on failing tests without rebuilding. Use when user says \"hot reload tests\", \"iterate on test fix\", \"run tests without rebuilding\", \"speed up test loop\", \"fix test faster\", or needs to set up MTP hot reload to rapidly iterate on test failures. Covers setup (NuGet package, environment variable, launchSettings.json) and the iterative workflow for fixing tests. DO NOT USE FOR: writing test code, diagnosing test failures, running tests normally with dotnet test (use run-tests), applying test filters, producing TRX reports, CI/CD pipeline configuration, or Visual Studio Test Explorer hot reload (which is a different feature).\n",
-      "name": "mtp-hot-reload"
     },
     "nlm-skill": {
       "description": "Expert guide for the NotebookLM CLI (`nlm`) and MCP server - interfaces for Google NotebookLM. Use this skill when users want to interact with NotebookLM programmatically, including: creating/managing notebooks, adding sources (URLs, YouTube, text, Google Drive), generating content (podcasts, reports, quizzes, flashcards, mind maps, slides, infographics, videos, data tables), conducting research, chatting with sources, or automating NotebookLM workflows. Triggers on mentions of \"nlm\", \"notebooklm\", \"notebook lm\", \"podcast generation\", \"audio overview\", or any NotebookLM-related automation task.",
       "name": "nlm-skill"
     },
-    "nuget-trusted-publishing": {
-      "description": "Set up NuGet trusted publishing (OIDC) on a GitHub Actions repo — replaces long-lived API keys with short-lived tokens. USE FOR: trusted publishing, NuGet OIDC, keyless NuGet publish, migrate from NuGet API key, NuGet/login, secure NuGet publishing. DO NOT USE FOR: publishing to private feeds or Azure Artifacts (OIDC is nuget.org only). INVOKES: shell (powershell or bash), edit, create, ask_user for guided repo setup.\n",
-      "name": "nuget-trusted-publishing"
-    },
     "optimizing-ef-core-queries": {
       "description": "Optimize Entity Framework Core queries by fixing N+1 problems, choosing correct tracking modes, using compiled queries, and avoiding common performance traps. Use when EF Core queries are slow, generating excessive SQL, or causing high database load.",
       "name": "optimizing-ef-core-queries"
-    },
-    "plan-ui-change": {
-      "description": "Plan complex Blazor UI features by decomposing them into focused components. USE FOR: building a complex Blazor page with multiple sections, planning component decomposition, designing a multi-section dashboard or layout, breaking down a large UI feature into composable components, pages with sidebars and content panels, any page with 3+ distinct visual sections or multiple interacting sub-features, identifying parent-child relationships and data flow. DO NOT USE FOR: creating new Blazor projects or apps from scratch (use create-blazor-project), implementing a single individual component (use author-component), writing component code with parameters and EventCallback (use author-component), or simple single-component pages.\n",
-      "name": "plan-ui-change"
-    },
-    "platform-detection": {
-      "description": "Reference data for detecting the test platform (VSTest vs Microsoft.Testing.Platform) and test framework (MSTest, xUnit, NUnit, TUnit) from project files. DO NOT USE directly — loaded by run-tests, mtp-hot-reload, and migrate-vstest-to-mtp when they need detection logic.",
-      "name": "platform-detection"
     },
     "pm-routing": {
       "description": "Dynamic routing logic for Team Lead agent. Describes each subagent's role, inputs/outputs, dual-mode default policy, and heuristics to decide which agents are needed for a given task.",
       "name": "pm-routing"
     },
-    "property-patterns": {
-      "description": "MSBuild property definition patterns: conditional defaults, composition/concatenation, path normalization, trailing slash handling, TFM detection helpers, and property evaluation order. Only activate in MSBuild/.NET build context. USE FOR: diagnosing and fixing MSBuild property definition issues in .props or .csproj files, reviewing and fixing shared property configuration anti-patterns, fixing DefineConstants or NoWarn being overwritten instead of appended, fixing unconditional property assignments that prevent project-level overrides, fixing unquoted conditions that fail when properties are empty, fixing hardcoded paths that break cross-platform builds, setting property defaults that can be overridden, understanding property evaluation order and last-write-wins semantics. DO NOT USE FOR: props vs targets placement (use directory-build-organization), item operations (use item-management), target structure (use target-authoring), general anti-patterns (use msbuild-antipatterns), non-MSBuild build systems.",
-      "name": "property-patterns"
-    },
     "receiving-code-review": {
       "description": "Use when receiving code review feedback, before implementing suggestions, especially if feedback seems unclear or technically questionable - requires technical rigor and verification, not performative agreement or blind implementation",
       "name": "receiving-code-review"
     },
-    "resolve-project-references": {
-      "description": "Guide for interpreting ResolveProjectReferences time in MSBuild performance summaries. Only activate in MSBuild/.NET build context. Activate when ResolveProjectReferences appears as the most expensive target and developers are trying to optimize it directly. Explains that the reported time includes wait time for dependent project builds and is misleading. Guides users to focus on task self-time instead. Do not activate for general build performance -- use build-perf-diagnostics instead.",
-      "name": "resolve-project-references"
-    },
     "run-tests": {
       "description": "For `dotnet test`: figures out which test platform (VSTest vs Microsoft.Testing.Platform) a project uses from `Directory.Build.props`, `global.json`, and `.csproj`, then picks the matching command syntax. USE FOR: running, filtering, or troubleshooting `dotnet test`; identifying the test runner/platform from project files; `--` separator rules on .NET SDK 8/9 vs 10+; choosing the right filter syntax for MSTest / xUnit / NUnit / TUnit (--filter, --filter-class, --filter-trait, --filter-query, --treenode-filter); TRX/reporting (--report-trx vs --logger trx); blame/hang/crash diagnostics (--blame-hang-timeout, --blame-crash); running tests against a single target framework when a project targets multiple TFMs (e.g., `<TargetFrameworks>net8.0;net9.0</TargetFrameworks>`, `--framework <TFM>`); and avoiding MTP/VSTest argument mixups (--logger trx on MTP, --report-trx on VSTest, --blame on MTP). DO NOT USE FOR: writing/generating test code, CI/CD config, or debugging failing test logic.\n",
       "name": "run-tests"
-    },
-    "support-prerendering": {
-      "description": "Make interactive Blazor components work correctly with prerendering. USE FOR fixing duplicate data loads, UI flicker during prerender-to-interactive handoff, null references during prerender, persisting state across prerender, disabling prerendering, excluding pages from interactive routing, or detecting whether a component is currently prerendering. DO NOT USE for choosing which render mode to use (see create-blazor-project) or general component authoring (see author-component).",
-      "name": "support-prerendering"
     },
     "system-text-json-net11": {
       "description": "Provides guidance on new System.Text.Json APIs introduced in .NET 11. It covers typed JsonTypeInfo access via GetTypeInfo<T> and TryGetTypeInfo<T> on JsonSerializerOptions, and the new JsonNamingPolicy.PascalCase static property. Use when serializing or deserializing JSON in .NET 11 applications and needing typed metadata access or PascalCase property naming.\n",
@@ -440,73 +164,17 @@
       "description": "Use when encountering any bug, test failure, or unexpected behavior, before proposing fixes",
       "name": "systematic-debugging"
     },
-    "target-authoring": {
-      "description": "Canonical patterns for writing custom MSBuild targets. Only activate in MSBuild/.NET build context. USE FOR: diagnosing and fixing custom target authoring anti-patterns, reviewing MSBuild target definitions for correctness, diagnosing broken SDK target chains across files (e.g., Directory.Build.targets silently redefining SDK targets), fixing targets that replace CompileDependsOn instead of extending it with $(CompileDependsOn), fixing query targets that return stale results due to Outputs vs Returns misuse, fixing missing Inputs/Outputs causing unnecessary rebuilds, fixing missing FileWrites registration. Covers DependsOnTargets vs BeforeTargets vs AfterTargets, the Build→CoreBuild three-level pattern, hooking into the build pipeline, the $(XxxDependsOn) chain-extension pattern. DO NOT USE FOR: incremental build tuning (use incremental-build), parallelization (use build-parallelism), general anti-patterns (use msbuild-antipatterns), non-MSBuild build systems.",
-      "name": "target-authoring"
-    },
-    "technology-selection": {
-      "description": "Guides technology selection and implementation of AI and ML features in .NET 8+ applications using ML.NET, Microsoft.Extensions.AI (MEAI), Microsoft Agent Framework (MAF), GitHub Copilot SDK, ONNX Runtime, and OllamaSharp. Covers the full spectrum from classic ML through modern LLM orchestration to local inference. Use when adding classification, regression, clustering, anomaly detection, recommendation, LLM integration (text generation, summarization, reasoning), RAG pipelines with vector search, agentic workflows with tool calling, Copilot extensions, or custom model inference via ONNX Runtime to a .NET project. DO NOT USE FOR projects targeting .NET Framework (requires .NET 8+), the task is pure data engineering or ETL with no ML/AI component, or the project needs a custom deep learning training loop (use Python with PyTorch/TensorFlow, then export to ONNX for .NET inference).",
-      "name": "technology-selection"
-    },
-    "template-authoring": {
-      "description": "Guides creation and validation of custom dotnet new templates. Generates templates from existing projects and validates template.json for authoring issues. USE FOR: creating a reusable dotnet new template from an existing project, validating template.json files for schema compliance and parameter issues, bootstrapping .template.config/template.json with correct identity, shortName, parameters, and post-actions, packaging templates as NuGet packages for distribution. DO NOT USE FOR: finding or using existing templates (use template-discovery and template-instantiation), MSBuild project file issues unrelated to template authoring, NuGet package publishing (only template packaging structure).\n",
-      "name": "template-authoring"
-    },
-    "template-discovery": {
-      "description": "Helps find, inspect, and compare .NET project templates. Resolves natural-language project descriptions to ranked template matches with pre-filled parameters. USE FOR: finding the right dotnet new template for a task, comparing templates side by side, inspecting template parameters and constraints, understanding what a template produces before creating a project, resolving intent like \"web API with auth\" to concrete template + parameters. DO NOT USE FOR: actually creating projects (use template-instantiation), authoring custom templates (use template-authoring), MSBuild or build issues (use dotnet-msbuild plugin), NuGet package management unrelated to template packages.\n",
-      "name": "template-discovery"
-    },
-    "template-instantiation": {
-      "description": "Creates .NET projects from templates with validated parameters, smart defaults, Central Package Management adaptation, and latest NuGet version resolution. USE FOR: creating new dotnet projects, scaffolding solutions with multiple projects, installing or uninstalling template packages, creating projects that respect Directory.Packages.props (CPM), composing multi-project solutions (API + tests + library), getting latest NuGet package versions in newly created projects. DO NOT USE FOR: finding or comparing templates (use template-discovery), authoring custom templates (use template-authoring), modifying existing projects or adding NuGet packages to existing projects.\n",
-      "name": "template-instantiation"
-    },
-    "template-validation": {
-      "description": "Validates custom dotnet new templates for correctness before publishing. Catches missing fields, parameter bugs, shortName conflicts, constraint issues, and common authoring mistakes that cause templates to fail silently. USE FOR: checking template.json files for errors before publishing or testing, diagnosing why a template doesn't appear after installation, reviewing template parameter definitions for type mismatches and missing defaults, finding shortName conflicts with dotnet CLI commands, validating post-action and constraint configuration. DO NOT USE FOR: finding or using existing templates (use template-discovery), creating projects from templates (use template-instantiation), creating templates from existing projects (use template-authoring).\n",
-      "name": "template-validation"
-    },
-    "test-analysis-extensions": {
-      "description": "Provides file paths to language-specific reference files for the test ANALYSIS skills (assertion-quality, test-anti-patterns, test-gap-analysis, test-smell-detection, test-tagging). Call this skill to discover available extension files (e.g., dotnet.md for .NET/MSTest/xUnit/NUnit/TUnit, python.md for pytest/unittest, typescript.md for Jest/Vitest/Mocha, java.md for JUnit/TestNG, etc.). Do not use directly — invoked by the test-quality-auditor agent and polyglot analysis skills that need framework-specific lookup tables (test markers, assertion APIs, skip annotations, sleep patterns, mystery guest indicators, integration markers, setup/teardown, tag-support capability).",
-      "name": "test-analysis-extensions"
-    },
-    "test-anti-patterns": {
-      "description": "Audits existing test code in any language for anti-patterns and quality issues — produces a severity-ranked report (Critical / Warning / Info) with concrete code-level fixes. Polyglot: .NET (MSTest/xUnit/NUnit/ TUnit), Python (pytest/unittest), TS/JS (Jest/Vitest/Mocha/node:test), Java (JUnit/TestNG), Go, Ruby (RSpec/Minitest), Rust, Swift, Kotlin (JUnit/Kotest), PowerShell (Pester), C++ (GoogleTest/Catch2). INVOKE when asked to audit, review, rank, or find problems in existing tests — \"audit my tests\", \"test smell audit\", \"rank by severity\", tests that pass but verify nothing, no/missing assertions, swallowed exceptions, always-true / self-comparing / tautological assertions, broad exception types, flakiness (sleep/Date.now/time.sleep), ordering dependency, shared global state, duplicated tests, magic values, missing await on async assertions. DO NOT USE FOR: writing new tests (use code-testing-agent, or writing-mstest-tests for MSTest); running tests (use run-tests); framework migration.\n",
-      "name": "test-anti-patterns"
-    },
     "test-driven-development": {
       "description": "Use when implementing any feature or bugfix, before writing implementation code",
       "name": "test-driven-development"
-    },
-    "test-gap-analysis": {
-      "description": "Performs pseudo-mutation analysis on production code in any language to find gaps in existing test suites. Use when the user asks to find weak tests, discover untested edge cases, check if tests would catch a bug, or evaluate test effectiveness through mutation-style reasoning. Analyzes production code for mutation points (boundaries, boolean flips, null/None/nil returns, exception/error removal, arithmetic changes) and checks whether tests would detect each mutation. Polyglot: .NET (MSTest/xUnit/NUnit/TUnit), Python (pytest/unittest), TS/JS (Jest/Vitest/Mocha/node:test), Java (JUnit/TestNG), Go, Ruby (RSpec/Minitest), Rust, Swift, Kotlin (JUnit/Kotest), PowerShell (Pester), C++ (GoogleTest/Catch2). DO NOT USE FOR: writing new tests (use code-testing-agent, or writing-mstest-tests for MSTest), detecting anti-patterns (use test-anti-patterns), measuring assertion diversity (use assertion-quality), or running actual mutation testing tools (Stryker, mutmut, PIT, cargo-mutants).",
-      "name": "test-gap-analysis"
-    },
-    "test-smell-detection": {
-      "description": "Deep-dive audit using the full testsmells.org 19-smell academic catalog for tests in any language. Every finding maps to a named, citable smell from the research literature (Assertion Roulette, Duplicate Assert, Mystery Guest, Eager Test, Sensitive Equality, Conditional Test Logic, Sleepy Test, Magic Number Test, etc.) with research-backed severity. Polyglot: .NET (MSTest/xUnit/NUnit/TUnit), Python (pytest/unittest), TS/JS (Jest/Vitest/Mocha/node:test), Java (JUnit/TestNG), Go, Ruby (RSpec/Minitest), Rust, Swift, Kotlin (JUnit/Kotest), PowerShell (Pester), C++ (GoogleTest/Catch2). INVOKE ONLY when explicitly asked for the testsmells.org 19-smell academic catalog or citable smell names from the literature. DO NOT USE FOR: general or pragmatic audits — use test-anti-patterns; writing new tests (use code-testing-agent, or writing-mstest-tests for MSTest); running tests (use run-tests); framework migration.\n",
-      "name": "test-smell-detection"
-    },
-    "test-tagging": {
-      "description": "Analyzes test suites in any language and tags each test with a standardized set of traits (positive, negative, critical-path, boundary, smoke, regression, integration, performance, security). Use when the user wants to categorize, audit, or label tests with traits. Works with .NET (MSTest TestCategory / xUnit Trait / NUnit Category / TUnit Property), Python (pytest markers; unittest has no canonical tag syntax so report-only), TypeScript/JavaScript (Jest/Vitest test names, describe-block conventions), Java (JUnit 5 @Tag / TestNG groups), Go (subtest naming / build tags / file _test.go), Ruby (RSpec metadata), Rust (cargo test naming / cfg attributes), Swift (XCTest test plans / Swift Testing @Tag), Kotlin (JUnit @Tag / Kotest tags), PowerShell (Pester -Tag), C++ (GoogleTest filter prefixes / Catch2 [tags] / doctest decorators). Auto-edits when the framework has canonical syntax; falls back to report-only otherwise. Do not use for writing new tests, running tests, or migrating frameworks.",
-      "name": "test-tagging"
-    },
-    "thread-abort-migration": {
-      "description": "Guides migration of .NET Framework Thread.Abort usage to cooperative cancellation in modern .NET. USE FOR: modernizing code that calls Thread.Abort, catching ThreadAbortException, replacing Thread.ResetAbort, replacing Thread.Interrupt for thread termination, resolving PlatformNotSupportedException or SYSLIB0006 after retargeting to .NET 6+, migrating ASP.NET Response.End or Response.Redirect(url, true) which internally call Thread.Abort. DO NOT USE FOR: code that only uses Thread.Join, Thread.Sleep, or Thread.Start without any abort, interrupt, or ThreadAbortException usage — these APIs work identically in modern .NET and need no migration. Also not for projects staying on .NET Framework, or Thread.Abort usage inside third-party libraries you do not control.\n",
-      "name": "thread-abort-migration"
     },
     "topaz-js": {
       "description": "Write, review, and debug Topaz JavaScript scripts for EventService. Use this skill whenever the user mentions Topaz, EventService, KafkaEvent, HttpRequestEvent, or asks to write/fix/review JS scripts that run on the .NET runtime. Triggers on: \"напиши скрипт для Topaz\", \"Topaz script\", \"EventService handler\", \"KafkaEvent\", \"HttpRequestEvent\", \"скрипт для обработки события\", \"Topaz JS\", \"JavaScriptRecipient\". Always use this skill when writing or reviewing any script that uses Message, Producer, HttpClient, Logger, or other Topaz injected globals — even if the user doesn't say \"Topaz\" explicitly.\n",
       "name": "topaz-js"
     },
-    "use-js-interop": {
-      "description": "Add, review, or fix JavaScript interop in Blazor components. USE FOR: calling JavaScript from Blazor, calling .NET from JavaScript, collocated .razor.js modules, IJSRuntime, IJSObjectReference lifecycle, DotNetObjectReference, ElementReference, timing rules for when JS is available, IAsyncDisposable disposal of JS references, server-side JS interop safety. DO NOT USE FOR: general Blazor component authoring without JS interop needs (use author-component), forms (use collect-user-input).\n",
-      "name": "use-js-interop"
-    },
     "verification-before-completion": {
       "description": "Use when about to claim work is complete, fixed, or passing, before committing or creating PRs - requires running verification commands and confirming output before making any success claims; evidence before assertions always",
       "name": "verification-before-completion"
-    },
-    "writing-mstest-tests": {
-      "description": "Write new MSTest unit tests and fix existing MSTest code using MSTest 3.x/4.x modern APIs and best practices. USE FOR: write or create MSTest unit tests, fix or modernize MSTest assertions, better MSTest assertion than Assert.IsTrue, replace hard cast with MSTest type assertion, MSTest assertion APIs (IsInstanceOfType, Contains, ContainsSingle, HasCount, IsEmpty, IsNotEmpty, DoesNotContain, StartsWith, EndsWith, MatchesRegex, IsGreaterThan, IsInRange, IsNull), fix swapped Assert.AreEqual arguments, replace ExpectedException with Assert.Throws, data-driven tests (DataRow, DynamicData, ValueTuples), test lifecycle (sealed classes, TestInitialize, TestCleanup), async tests and cancellation tokens, test parallelization (Parallelize / DoNotParallelize), MSTest.Sdk project setup. DO NOT USE FOR: broad test quality audits (use test-anti-patterns), running tests (use run-tests), MSTest version migration (use migrate-mstest-v1v2-to-v3 or migrate-mstest-v3-to-v4), xUnit/NUnit/TUnit, or non-.NET languages.\n",
-      "name": "writing-mstest-tests"
     },
     "writing-plans": {
       "description": "Use when you have a spec or requirements for a multi-step task, before touching code",
