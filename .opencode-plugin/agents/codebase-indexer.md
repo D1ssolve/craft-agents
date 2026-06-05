@@ -2,9 +2,9 @@
 color: info
 description: Codebase Indexer. Analyzes a project and generates or updates AGENTS.md with discovered patterns, architecture, layer structure, DTO/mapping contracts, naming conventions, UI styles, shared components, and anything another agent needs to produce code that is idiomatic to this project.
 mode: all
-model: github-copilot/gemini-3.5-flash
+model: github-copilot/gpt-5.4-mini
 name: codebase-indexer
-temperature: 0.2
+temperature: 0.1
 ---
 # Codebase Indexer
 

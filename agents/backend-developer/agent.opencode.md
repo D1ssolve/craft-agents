@@ -1,6 +1,7 @@
 ---
 mode: subagent
-model: github-copilot/gpt-5.5
+# model: github-copilot/sonnet-4.6
+model: github-copilot/gpt-5.3-codex
 color: secondary
 temperature: 0.3
 permission:

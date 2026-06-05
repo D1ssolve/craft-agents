@@ -1,9 +1,9 @@
 ---
 description: Read-only codebase search specialist. Use when the task is to find where behavior lives, which files implement something, or how a flow is wired. Parallelize independent searches when useful and return actionable file paths plus a direct answer.
 mode: subagent
-model: github-copilot/gemini-3.5-flash
+model: github-copilot/gpt-5.4-mini
 name: code-explorer
-temperature: 0.2
+temperature: 0.1
 ---
 # Code Explorer
 

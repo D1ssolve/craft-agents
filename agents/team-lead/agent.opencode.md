@@ -1,6 +1,6 @@
 ---
 mode: primary
-model: opencode/glm-5.1
+model: kimi-for-coding/k2p6
 color: accent
 temperature: 0.2
 permission:

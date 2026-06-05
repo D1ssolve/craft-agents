@@ -2,7 +2,7 @@
 color: accent
 description: Team Lead. Pure orchestrator — loads pm-routing skill, reads project context, composes the minimal subagent chain needed, and drives execution. Does not implement anything itself.
 mode: primary
-model: opencode/glm-5.1
+model: kimi-for-coding/k2p6
 name: team-lead
 temperature: 0.2
 ---

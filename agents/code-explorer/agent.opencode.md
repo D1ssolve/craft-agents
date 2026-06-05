@@ -1,7 +1,7 @@
 ---
 mode: subagent
-model: github-copilot/gemini-3.5-flash
-temperature: 0.2
+model: github-copilot/gpt-5.4-mini
+temperature: 0.1
 permission:
   edit: deny
   task: deny
