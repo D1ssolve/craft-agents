@@ -4,6 +4,7 @@ description: Runs system-architect GPT and Sonnet candidates in parallel, compar
 mode: subagent
 model: github-copilot/gpt-5.5
 name: system-architect-dual
+permission: {"edit":"allow","question":"allow","task":{"*":"deny","system-architect-gpt":"allow","system-architect-sonnet":"allow"},"webfetch":"allow","websearch":"allow"}
 temperature: 0.4
 ---
 # System Architect Dual Orchestrator

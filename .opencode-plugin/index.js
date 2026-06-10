@@ -13,17 +13,6 @@ const mcp = {
     "type": "remote",
     "url": "https://mcp.context7.com/mcp"
   },
-  "mempalace": {
-    "command": [
-      "uvx",
-      "--from",
-      "mempalace",
-      "python",
-      "-m",
-      "mempalace.mcp_server"
-    ],
-    "type": "local"
-  },
   "notebooklm-mcp": {
     "command": [
       "uvx",

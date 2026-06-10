@@ -156,6 +156,10 @@
       "description": "For `dotnet test`: figures out which test platform (VSTest vs Microsoft.Testing.Platform) a project uses from `Directory.Build.props`, `global.json`, and `.csproj`, then picks the matching command syntax. USE FOR: running, filtering, or troubleshooting `dotnet test`; identifying the test runner/platform from project files; `--` separator rules on .NET SDK 8/9 vs 10+; choosing the right filter syntax for MSTest / xUnit / NUnit / TUnit (--filter, --filter-class, --filter-trait, --filter-query, --treenode-filter); TRX/reporting (--report-trx vs --logger trx); blame/hang/crash diagnostics (--blame-hang-timeout, --blame-crash); running tests against a single target framework when a project targets multiple TFMs (e.g., `<TargetFrameworks>net8.0;net9.0</TargetFrameworks>`, `--framework <TFM>`); and avoiding MTP/VSTest argument mixups (--logger trx on MTP, --report-trx on VSTest, --blame on MTP). DO NOT USE FOR: writing/generating test code, CI/CD config, or debugging failing test logic.\n",
       "name": "run-tests"
     },
+    "self-improving-skills-agents": {
+      "description": "Use after a coding session to analyze misunderstandings, behavior patterns, and misses; then propose concrete updates to SKILL.md, AGENT.md, prompts, and hooks.",
+      "name": "self-improving-skills-agents"
+    },
     "system-text-json-net11": {
       "description": "Provides guidance on new System.Text.Json APIs introduced in .NET 11. It covers typed JsonTypeInfo access via GetTypeInfo<T> and TryGetTypeInfo<T> on JsonSerializerOptions, and the new JsonNamingPolicy.PascalCase static property. Use when serializing or deserializing JSON in .NET 11 applications and needing typed metadata access or PascalCase property naming.\n",
       "name": "system-text-json-net11"

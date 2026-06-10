@@ -4,6 +4,7 @@ description: Codebase Indexer. Analyzes a project and generates or updates AGENT
 mode: all
 model: github-copilot/gpt-5.4-mini
 name: codebase-indexer
+permission: {"edit":"allow"}
 temperature: 0.1
 ---
 # Codebase Indexer

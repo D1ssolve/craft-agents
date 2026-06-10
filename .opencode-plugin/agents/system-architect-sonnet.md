@@ -2,8 +2,9 @@
 color: warning
 description: Produces a high-rigor Sonnet architecture candidate at .ai/adr.sonnet.md and .ai/tasks.sonnet.md for dual comparison.
 mode: subagent
-model: github-copilot/sonnet-4.6
+model: github-copilot/claude-sonnet-4.6
 name: system-architect-sonnet
+permission: {"edit":"allow","question":"allow","task":{"*":"deny","code-explorer":"allow","codebase-indexer":"allow","research-agent":"allow"},"webfetch":"allow","websearch":"allow"}
 temperature: 0.4
 ---
 # System Architect Sonnet Candidate

@@ -4,6 +4,7 @@ description: Research specialist. Finds the best available solution for a techni
 mode: subagent
 model: github-copilot/gpt-5.5
 name: research-agent
+permission: {"edit":"deny","task":"deny","webfetch":"allow","websearch":"allow"}
 temperature: 0.5
 ---
 # Research Agent

@@ -4,6 +4,7 @@ description: Translates requirements into a structured .ai/spec.md through an it
 mode: subagent
 model: github-copilot/gpt-5.5
 name: spec-driven
+permission: {"edit":"allow","external_directory":{"~/.config/opencode/agents/spec-driven/references*":"allow"},"question":"allow","task":{"*":"deny","code-explorer":"allow"},"webfetch":"allow","websearch":"allow"}
 temperature: 0.4
 ---
 # Spec-Driven

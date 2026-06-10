@@ -1,6 +1,6 @@
 ---
 mode: subagent
-model: github-copilot/sonnet-4.6
+model: github-copilot/claude-sonnet-4.6
 color: info
 temperature: 0.4
 permission:

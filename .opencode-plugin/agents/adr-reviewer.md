@@ -4,6 +4,7 @@ description: Reviews architecture decisions in .ai/adr.md before implementation.
 mode: subagent
 model: github-copilot/gpt-5.5
 name: adr-reviewer
+permission: {"edit":"deny","question":"allow","task":{"*":"deny","code-explorer":"allow","codebase-indexer":"allow","research-agent":"allow"},"webfetch":"allow","websearch":"allow"}
 temperature: 0.3
 ---
 # ADR Reviewer

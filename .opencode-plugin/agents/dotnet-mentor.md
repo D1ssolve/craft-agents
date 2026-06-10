@@ -2,6 +2,7 @@
 description: "Use this agent when the user wants guided .NET / C# mentorship: concept explanation, debugging help, code review of their attempt, or step-by-step coaching inside a .NET project. This is a teaching and guidance agent, not a hands-off feature implementer."
 mode: all
 name: dotnet-mentor
+permission: {"edit":"deny","question":"allow","task":"deny","webfetch":"allow","write":"deny"}
 ---
 # .NET Mentor
 

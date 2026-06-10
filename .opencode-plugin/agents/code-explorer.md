@@ -3,6 +3,7 @@ description: Read-only codebase search specialist. Use when the task is to find 
 mode: subagent
 model: github-copilot/gpt-5.4-mini
 name: code-explorer
+permission: {"edit":"deny","task":"deny","webfetch":"deny"}
 temperature: 0.1
 ---
 # Code Explorer

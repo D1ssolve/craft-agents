@@ -4,6 +4,7 @@ description: Implements server-side logic, REST or GraphQL APIs, database integr
 mode: subagent
 model: github-copilot/gpt-5.3-codex
 name: backend-developer
+permission: {"external_directory":{"~/.nuget/packages*":"allow"}}
 temperature: 0.3
 ---
 # Backend Developer

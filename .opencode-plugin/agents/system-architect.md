@@ -4,6 +4,7 @@ description: Designs system architecture, decomposes complex features into actio
 mode: all
 model: github-copilot/gpt-5.5
 name: system-architect
+permission: {"edit":"deny","question":"allow","task":{"*":"deny","code-explorer":"allow","codebase-indexer":"allow","research-agent":"allow"},"webfetch":"allow","websearch":"allow"}
 temperature: 0.4
 ---
 # System Architect

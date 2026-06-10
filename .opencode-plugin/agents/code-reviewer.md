@@ -4,6 +4,7 @@ description: Production-readiness reviewer. Inspects code changes through a spec
 mode: subagent
 model: github-copilot/gpt-5.5
 name: code-reviewer
+permission: {"question":"allow","webfetch":"deny"}
 temperature: 0.3
 ---
 # Code Reviewer
