@@ -1,6 +1,6 @@
 ---
 mode: subagent
-model: github-copilot/gpt-5.5
+model: kimi-for-coding/k2p7
 color: warning
 temperature: 0.4
 permission:

@@ -1,6 +1,6 @@
 ---
 mode: subagent
-model: github-copilot/gpt-5.4-mini
+model: openai/gpt-5.4-mini
 temperature: 0.1
 permission:
   edit: deny

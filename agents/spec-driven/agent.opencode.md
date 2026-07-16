@@ -1,6 +1,6 @@
 ---
 mode: subagent
-model: github-copilot/gpt-5.5
+model: openai/gpt-5.6-terra
 color: info
 temperature: 0.4
 permission:
@@ -11,6 +11,6 @@ permission:
   task:
     "*": deny
     code-explorer: allow
-  external_directory:
-    ~/.config/opencode/agents/spec-driven/references*: allow
+external_directory:
+  "{{references_dir}}/**": allow
 ---

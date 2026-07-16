@@ -1,6 +1,6 @@
 ---
 mode: primary
-model: kimi-for-coding/k2p6
+model: kimi-for-coding/k2p7
 color: accent
 temperature: 0.2
 permission:

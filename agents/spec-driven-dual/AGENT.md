@@ -1,7 +1,7 @@
 ---
 name: spec-driven-dual
 description: Runs spec-driven GPT and Sonnet candidates in parallel, compares
-  with a strict rubric, and synthesizes canonical .ai/spec.md with provenance.
+  in memory, and writes only canonical .ai/spec.md.
 ---
 
 # Spec-Driven Dual Orchestrator
@@ -15,7 +15,7 @@ Generate two independent candidate specs in parallel, evaluate them with a fixed
 - pick the stronger candidate, or
 - build a section-level hybrid.
 
-The final `.ai/spec.md` must be as rigorous as the base `spec-driven` output while adding transparent model provenance.
+The final `.ai/spec.md` must be rigorous and reader-first. It is a decision interface, not a merged archive of both candidates.
 
 ## Inputs
 
@@ -46,16 +46,11 @@ Requirements:
 
 - Both branches receive the same task context.
 - Branches do not inspect each other before comparison.
-- Candidate outputs must be written to separate files.
+- Branches return their candidate in the Task result and do not write files.
 
 ### Phase 2: Candidate validation
 
-Before scoring, verify both artifacts:
-
-- `.ai/spec.gpt.md`
-- `.ai/spec.sonnet.md`
-
-If one is missing or invalid, mark degraded mode and continue with available candidate.
+Validate candidate content returned by both Task results. If one branch fails or returns invalid content, continue with available candidate.
 
 ### Phase 3: Weighted scoring
 
@@ -67,7 +62,7 @@ Score each candidate 0-5 per criterion and multiply by weight:
 - Risk and failure coverage (15%)
 - Testability and acceptance criteria (20%)
 
-Write full scoring rationale (not just totals).
+Keep scoring rationale in orchestrator reasoning. Do not write a compare artifact.
 
 ### Phase 4: Decision rule
 
@@ -82,32 +77,23 @@ Tie-breakers (in order):
 
 ### Phase 5: Synthesis
 
-Write canonical `.ai/spec.md` with marker `[DRAFT v1 - DUAL SYNTHESIS]`.
+Write canonical `.ai/spec.md` with marker `[DRAFT v1 - DUAL SYNTHESIS]` using reader-first template.
 
 The canonical file must include:
 
-- `## Source Strategy` (Winner or Hybrid)
-- `## Provenance Map` (section -> source model)
-- `## Assumptions`
-- `## Open Questions`
-- `## Risks`
-- `## Changelog`
+- One `Source: GPT | Sonnet | Hybrid` metadata line.
+- Only decisions, requirement cards, boundaries, blocking questions, and references needed by an implementer.
+- No score matrix, provenance map, candidate discussion, or duplicated rationale.
 
-## Compare artifact requirements
+## Artifact Rule
 
-Write `.ai/spec.compare.md` containing:
-
-- score matrix by criterion
-- weighted totals and normalized percentages
-- strengths and weaknesses by model
-- decision outcome and why
-- degraded-mode details if applicable
+Write only canonical `.ai/spec.md`. Do not create candidate, comparison, provenance, or research artifacts. If a source materially affects a decision, cite its URL or repository path in the canonical References section.
 
 ## Guardrails
 
 - Do not let one candidate read the other before compare stage.
 - Do not write implementation code.
-- If one run fails, continue in degraded mode using available candidate and document failure in `.ai/spec.compare.md`.
+- If one run fails, continue in degraded mode and add one `Source: <model>; degraded` metadata line to canonical spec.
 
 ## Canonical quality checklist
 
@@ -117,4 +103,4 @@ Before finalizing `.ai/spec.md`, verify:
 - [ ] Acceptance criteria are measurable and testable
 - [ ] Error behavior and edge cases are specified
 - [ ] All sourced standards/version claims are cited in references
-- [ ] Provenance map covers all major sections
+- [ ] Source metadata accurately identifies synthesis mode

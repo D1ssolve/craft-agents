@@ -6,5 +6,9 @@
 node_modules/
 dist/
 
+.claude-plugin/
+.codex/
+.opencode-plugin/
+
 # macOS
 .DS_Store

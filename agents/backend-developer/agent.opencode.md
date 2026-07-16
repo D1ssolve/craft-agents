@@ -1,7 +1,7 @@
 ---
 mode: subagent
-# model: github-copilot/sonnet-4.6
-model: github-copilot/gpt-5.3-codex
+model: openai/gpt-5.6-terra
+# model: kimi-for-coding/k2p7
 color: secondary
 temperature: 0.3
 permission:

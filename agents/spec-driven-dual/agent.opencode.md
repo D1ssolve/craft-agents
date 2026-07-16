@@ -1,6 +1,6 @@
 ---
 mode: subagent
-model: github-copilot/claude-opus-4.8
+model: openai/gpt-5.6-terra
 color: info
 temperature: 0.4
 permission:

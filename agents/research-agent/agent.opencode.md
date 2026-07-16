@@ -1,8 +1,8 @@
 ---
 mode: subagent
-model: github-copilot/gpt-5.5
+model: openai/gpt-5.6-terra
 color: info
-temperature: 0.5
+temperature: 0.3
 permission:
   edit: deny
   task: deny
