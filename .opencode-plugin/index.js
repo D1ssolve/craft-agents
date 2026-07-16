@@ -8,7 +8,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const mcp = {
   "context7": {
     "headers": {
-      "Authorization": "Bearer ${CONTEXT7_API_KEY}"
+      "Authorization": "Bearer ctx7sk-31fe72c1-712e-47d6-903e-1b439794d138"
     },
     "type": "remote",
     "url": "https://mcp.context7.com/mcp"
@@ -59,7 +59,11 @@ function loadAgents() {
     const agentId = entry.name.slice(0, -3);
     const filePath = join(agentsDir, entry.name);
     const { data, body } = parseFrontmatter(readFileSync(filePath, "utf8"));
-    agents[agentId] = { ...data, prompt: resolveReferenceTokens(body, join("agents", agentId, "references")) };
+    const referencesDir = join(__dirname, "agents", agentId, "references");
+    agents[agentId] = {
+      ...resolveReferenceTokensInValue(data, referencesDir),
+      prompt: resolveReferenceTokens(body, referencesDir),
+    };
   }
 
   return agents;
@@ -156,6 +160,20 @@ function parseScalar(value) {
 
 function resolveReferenceTokens(content, referencesDir) {
   return content.replaceAll("{{references_dir}}", referencesDir);
+}
+
+function resolveReferenceTokensInValue(value, referencesDir) {
+  if (typeof value === "string") return resolveReferenceTokens(value, referencesDir);
+  if (Array.isArray(value)) return value.map((item) => resolveReferenceTokensInValue(item, referencesDir));
+  if (value !== null && typeof value === "object") {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, nestedValue]) => [
+        resolveReferenceTokens(key, referencesDir),
+        resolveReferenceTokensInValue(nestedValue, referencesDir),
+      ]),
+    );
+  }
+  return value;
 }
 
 async function hook_agents_guard(input, options) {

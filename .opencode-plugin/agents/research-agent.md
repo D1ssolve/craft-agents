@@ -2,10 +2,10 @@
 color: info
 description: Research specialist. Finds the best available solution for a technical problem by querying up-to-date library documentation via Context7 MCP and searching the web for current community consensus, benchmarks, CVEs, changelogs, and best practices. Invoke before system-architect when the task involves selecting a library, comparing approaches, or validating that a technology supports a required capability.
 mode: subagent
-model: github-copilot/gpt-5.5
+model: openai/gpt-5.6-terra
 name: research-agent
 permission: {"edit":"deny","task":"deny","webfetch":"allow","websearch":"allow"}
-temperature: 0.5
+temperature: 0.3
 ---
 # Research Agent
 

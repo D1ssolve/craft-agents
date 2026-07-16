@@ -37,15 +37,15 @@
       "name": "spec-driven"
     },
     "spec-driven-dual": {
-      "description": "Runs spec-driven GPT and Sonnet candidates in parallel, compares with a strict rubric, and synthesizes canonical .ai/spec.md with provenance.",
+      "description": "Runs spec-driven GPT and Sonnet candidates in parallel, compares in memory, and writes only canonical .ai/spec.md.",
       "name": "spec-driven-dual"
     },
     "spec-driven-gpt": {
-      "description": "Produces a high-rigor GPT candidate spec artifact at .ai/spec.gpt.md for dual-run comparison. Preserves full spec quality gates and evidence discipline.",
+      "description": "Produces a high-rigor GPT candidate spec in memory for dual-run comparison. Preserves full spec quality gates and evidence discipline.",
       "name": "spec-driven-gpt"
     },
     "spec-driven-sonnet": {
-      "description": "Produces a high-rigor Sonnet candidate spec artifact at .ai/spec.sonnet.md for dual-run comparison. Preserves full spec quality gates and evidence discipline.",
+      "description": "Produces a high-rigor Sonnet candidate spec in memory for dual-run comparison. Preserves full spec quality gates and evidence discipline.",
       "name": "spec-driven-sonnet"
     },
     "system-architect": {
@@ -53,15 +53,15 @@
       "name": "system-architect"
     },
     "system-architect-dual": {
-      "description": "Runs system-architect GPT and Sonnet candidates in parallel, compares with a strict rubric, and synthesizes canonical .ai/adr.md + .ai/tasks.md with provenance.",
+      "description": "Runs system-architect GPT and Sonnet candidates in parallel, compares in memory, and writes only canonical .ai/adr.md + .ai/tasks.md.",
       "name": "system-architect-dual"
     },
     "system-architect-gpt": {
-      "description": "Produces a high-rigor GPT architecture candidate at .ai/adr.gpt.md and .ai/tasks.gpt.md for dual comparison.",
+      "description": "Produces a high-rigor GPT architecture candidate in memory for dual comparison.",
       "name": "system-architect-gpt"
     },
     "system-architect-sonnet": {
-      "description": "Produces a high-rigor Sonnet architecture candidate at .ai/adr.sonnet.md and .ai/tasks.sonnet.md for dual comparison.",
+      "description": "Produces a high-rigor Sonnet architecture candidate in memory for dual comparison.",
       "name": "system-architect-sonnet"
     },
     "team-lead": {

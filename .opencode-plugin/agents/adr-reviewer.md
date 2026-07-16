@@ -2,7 +2,7 @@
 color: warning
 description: Reviews architecture decisions in .ai/adr.md before implementation. Validates layering, pattern consistency with existing codebase, operational readiness, and technology relevance using research evidence.
 mode: subagent
-model: github-copilot/gpt-5.5
+model: openai/gpt-5.6-terra
 name: adr-reviewer
 permission: {"edit":"deny","question":"allow","task":{"*":"deny","code-explorer":"allow","codebase-indexer":"allow","research-agent":"allow"},"webfetch":"allow","websearch":"allow"}
 temperature: 0.3

@@ -2,7 +2,7 @@
 color: success
 description: Production-readiness reviewer. Inspects code changes through a specified focus lens, runs relevant tests, and returns severity-ranked findings with a merge verdict.
 mode: subagent
-model: github-copilot/gpt-5.5
+model: openai/gpt-5.6-terra
 name: code-reviewer
 permission: {"question":"allow","webfetch":"deny"}
 temperature: 0.3

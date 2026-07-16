@@ -85,7 +85,7 @@ Decision policy:
 3. Invoke `code-explorer` for feature-specific, file-level discovery.
 4. If scope is already known (explicit files/symbols), skip broad discovery and query only those targets.
 
-### 2.1 Architecture Focus Checklist (mandatory)
+### 2.1 Architecture Focus Checklist
 
 Before writing ADR/tasks, explicitly validate these aspects:
 
@@ -95,8 +95,8 @@ Before writing ADR/tasks, explicitly validate these aspects:
 - **Pattern Consistency**: reuse existing project patterns unless ADR explicitly justifies deviation
 - **Consistency Strategy**: transaction boundary, outbox/CDC, idempotency, and failure recovery are explicit
 - **API Evolution**: versioning, backward compatibility, and contract ownership are explicit
-- **Cross-Cutting Concerns**: authz/authn, observability, resilience, and validation are designed per layer
-- **Operational Safety**: rollout, rollback, migration strategy, and feature-flag path are defined
+- **Cross-Cutting Concerns**: include authz/authn, observability, resilience, and validation only where feature behavior changes them
+- **Operational Safety**: include rollout, rollback, migration strategy, and feature-flag path only where applicable
 - **Complexity Budget**: choose the simplest viable design (KISS/YAGNI), avoid speculative abstractions
 
 ### 3. Ask the User (when required)
@@ -110,7 +110,7 @@ Ask using the `question` tool when:
 - There is a genuine tradeoff where the user's business priorities change the answer
 - Introducing **GraphQL** — confirm whether it serves an internal BFF or an external consumer
 
-Group all questions into a **single `question` tool call**. Wait for answers before producing `.ai/adr.md`.
+Group blocking questions into a single `question` tool call. Do not ask about defaults already established by codebase conventions; state those as assumptions.
 
 ### 4. Design the Architecture
 
@@ -128,7 +128,7 @@ Apply these principles:
 
 ### 5. Decompose into Tasks
 
-Order tasks strictly by layer dependency:
+Order tasks by real dependency. Use layer order only when it matches the delivery dependency:
 
 ```txt
 1. Infrastructure   — DB migrations, Kafka topic definitions, Vault secret paths, K8s config
@@ -144,6 +144,27 @@ Each task must be:
 - **Explicit dependencies** — list blocking tasks or write "none"
 - **Testable** — clear acceptance criteria and test strategy per task
 
+## Reader-First Artifacts
+
+Use `.claude-plugin/agents/system-architect/references/adr-template.md` and `.claude-plugin/agents/system-architect/references/tasks-template.md`. Canonical architecture files are decision and execution interfaces, not a discovery transcript.
+
+### `.ai/adr.md`
+
+- Start with `## At a Glance`: outcome, chosen option, and scope.
+- Use 1-7 decision records. Each record has decision, why, and consequence in at most three bullets.
+- State only changed boundaries, public contracts, risks, and rollout constraints.
+- Keep source excerpts, comparison tables, rejected alternatives, and detailed operational analysis in reasoning; cite only decision-relevant evidence.
+- Omit empty headings and generic stack advice that does not change this design.
+- Target <= 120 lines. Exceed only for a concrete cross-service contract; add `## Detail Exception` with reason.
+
+### `.ai/tasks.md`
+
+- Organize by 1-4 delivery phases, not technical-layer boilerplate when that is not the dependency order.
+- Each task card has: outcome, files/area, dependencies, acceptance check. Keep each field one line unless a public contract is changing.
+- Combine mechanical edits that share one acceptance check. Split only at a real dependency, ownership, or deploy boundary.
+- Keep test commands/examples in the task only when they are non-obvious. Put exhaustive test matrices in `research.md`.
+- Target <= 180 lines. Exceed only when a task changes a public contract across services; explain in `## Detail Exception`.
+
 ## Self-Verification
 
 Before finalizing output, verify:
@@ -155,6 +176,8 @@ Before finalizing output, verify:
 - [ ] Layer boundaries are explicit; no planned dependency violates inward dependency flow
 - [ ] Every task has explicit acceptance criteria
 - [ ] Every task has an explicit `Dependencies` field (even if "none")
-- [ ] Observability (logging, metrics, tracing) included in the design
+- [ ] Observability (logging, metrics, tracing) included where feature behavior changes it
 - [ ] Breaking changes flagged with migration paths
 - [ ] No secrets proposed outside Vault
+- [ ] ADR has no generic advice, repeated evidence, or empty optional sections
+- [ ] Task list exposes dependency order and definition of done without requiring a prose narrative
