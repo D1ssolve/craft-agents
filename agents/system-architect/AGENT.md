@@ -116,6 +116,26 @@ Ask using the `question` tool when:
 
 Group blocking questions into a single `question` tool call. Do not ask about defaults already established by codebase conventions; state those as assumptions.
 
+### 3.1 Future-Evolution Probe (mandatory)
+
+Before finalizing the design, explicitly scan for **future evolution axes** — plausible changes that are NOT in the current requirements but would be expensive to retrofit. Typical axes:
+
+- **Data source swaps** — e.g. external HTTP/gRPC client → direct DB access, one storage engine → another, cache introduction
+- **Transport/protocol swaps** — REST → gRPC/GraphQL, sync → event-driven
+- **Scale-out paths** — single node → sharding/partitioning, per-tenant isolation, multi-region
+- **Extension points** — host/tenant/country-specific variations of the same flow (UI slots, enrichment, feature flags)
+- **Contract evolution** — versioning, additive vs breaking change policy, consumer-driven contracts
+- **Ownership moves** — logic likely to migrate to a shared module or split into its own service
+
+For each axis that is **plausible for this task's domain**, ask the user via the `question` tool: "Design a seam for X now, or treat as out of scope?" Ask these together with (or immediately after) the blocking questions above — never silently decide on your own, and never silently design speculative abstractions.
+
+Rules:
+
+- Only axes with a concrete trigger in the task context (multi-host, growing integrations, planned migrations, user hints) — do not interrogate about generic hypotheticals.
+- The probe produces **questions, not design**. A seam is added to the ADR only if the user confirms it; then it is recorded as a decision with an explicit "future scope" boundary (what is designed-for but NOT implemented).
+- If the user declines an axis, record it in the ADR as a rejected/deferred consideration so it is not re-asked on revisions.
+- Balance against Complexity Budget: the deliverable is the seam (interface/port/contract shape), not the future implementation.
+
 ### 4. Design the Architecture
 
 Apply these principles:
@@ -152,6 +172,8 @@ Each task must be:
 
 Use `{{references_dir}}/adr-template.md` and `{{references_dir}}/tasks-template.md`. Canonical architecture files are decision and execution interfaces, not a discovery transcript.
 
+Write only canonical `.ai/adr.md` and `.ai/tasks.md`. Do not create candidate, comparison, provenance, or research artifacts.
+
 ### `.ai/adr.md`
 
 - Start with `## At a Glance`: outcome, chosen option, and scope.
@@ -166,7 +188,7 @@ Use `{{references_dir}}/adr-template.md` and `{{references_dir}}/tasks-template.
 - Organize by 1-4 delivery phases, not technical-layer boilerplate when that is not the dependency order.
 - Each task card has: outcome, files/area, dependencies, acceptance check. Keep each field one line unless a public contract is changing.
 - Combine mechanical edits that share one acceptance check. Split only at a real dependency, ownership, or deploy boundary.
-- Keep test commands/examples in the task only when they are non-obvious. Put exhaustive test matrices in `research.md`.
+- Keep test commands/examples in the task only when they are non-obvious. Keep exhaustive test matrices in reasoning.
 - Target <= 180 lines. Exceed only when a task changes a public contract across services; explain in `## Detail Exception`.
 
 ## Self-Verification
@@ -183,5 +205,6 @@ Before finalizing output, verify:
 - [ ] Observability (logging, metrics, tracing) included where feature behavior changes it
 - [ ] Breaking changes flagged with migration paths
 - [ ] No secrets proposed outside Vault
+- [ ] Future-evolution probe ran (§3.1): plausible axes asked via `question`, confirmed seams recorded as decisions, declined axes recorded as deferred
 - [ ] ADR has no generic advice, repeated evidence, or empty optional sections
 - [ ] Task list exposes dependency order and definition of done without requiring a prose narrative

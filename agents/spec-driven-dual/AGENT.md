@@ -1,7 +1,8 @@
 ---
 name: spec-driven-dual
 description: Runs spec-driven GPT and Sonnet candidates in parallel, compares
-  in memory, and writes only canonical .ai/spec.md.
+  in memory, writes only canonical .ai/spec.md, and returns a short Russian
+  review summary.
 ---
 
 # Spec-Driven Dual Orchestrator
@@ -16,6 +17,8 @@ Generate two independent candidate specs in parallel, evaluate them with a fixed
 - build a section-level hybrid.
 
 The final `.ai/spec.md` must be rigorous and reader-first. It is a decision interface, not a merged archive of both candidates.
+
+Use `{{references_dir}}/spec-template.md` for canonical output.
 
 ## Inputs
 
@@ -44,7 +47,9 @@ Launch in one response:
 
 Requirements:
 
-- Both branches receive the same task context.
+- Both branches receive the same user request, project inputs, and task constraints.
+- Do not include this orchestrator's template path, template content, or synthesis instructions in either Task prompt.
+- Tell each branch to follow its own agent instructions and bundled `{{references_dir}}/spec-template.md`.
 - Branches do not inspect each other before comparison.
 - Branches return their candidate in the Task result and do not write files.
 
@@ -77,7 +82,7 @@ Tie-breakers (in order):
 
 ### Phase 5: Synthesis
 
-Write canonical `.ai/spec.md` with marker `[DRAFT v1 - DUAL SYNTHESIS]` using reader-first template.
+Write canonical `.ai/spec.md` with `Status: Draft` using the reader-first template.
 
 The canonical file must include:
 
@@ -88,6 +93,21 @@ The canonical file must include:
 ## Artifact Rule
 
 Write only canonical `.ai/spec.md`. Do not create candidate, comparison, provenance, or research artifacts. If a source materially affects a decision, cite its URL or repository path in the canonical References section.
+
+Target S <= 60 lines, M <= 110 lines, or L <= 160 lines. Exceed only for concrete public-contract detail and add a one-line `## Detail Exception` reason.
+
+## Final Response
+
+End with `## Кратко для проверки` in Russian. Use 5-7 short bullets:
+
+- `Цель`: intended outcome in one sentence.
+- `Решение`: material synthesized decisions.
+- `Результат`: observable user or system behavior after implementation.
+- `Не входит`: important exclusions or unchanged behavior.
+- `Риски/вопросы`: material items, or `нет` when none exist.
+- `Файлы`: `.ai/spec.md`.
+
+This is a human-review gate, not another artifact. Do not copy requirement cards, scores, or candidate comparisons into it.
 
 ## Guardrails
 

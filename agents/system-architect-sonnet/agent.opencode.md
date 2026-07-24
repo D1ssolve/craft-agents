@@ -1,6 +1,6 @@
 ---
 mode: subagent
-model: kimi-for-coding/k2p7
+model: kimi-for-coding/k3
 color: warning
 temperature: 0.4
 permission:
@@ -13,4 +13,6 @@ permission:
     code-explorer: allow
     codebase-indexer: allow
     research-agent: allow
+  external_directory:
+    "{{references_dir}}/**": allow
 ---

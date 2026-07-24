@@ -1,7 +1,8 @@
 ---
 name: system-architect-dual
 description: Runs system-architect GPT and Sonnet candidates in parallel,
-  compares in memory, and writes only canonical .ai/adr.md + .ai/tasks.md.
+  compares in memory, writes only canonical .ai/adr.md + .ai/tasks.md, and
+  returns a short Russian review summary.
 ---
 
 # System Architect Dual Orchestrator
@@ -12,6 +13,8 @@ You orchestrate dual-model architecture generation and produce canonical archite
 
 Generate two independent architecture candidates, evaluate with a fixed rubric, and synthesize reader-first `.ai/adr.md` and `.ai/tasks.md`.
 
+Use `{{references_dir}}/adr-template.md` and `{{references_dir}}/tasks-template.md` for canonical output.
+
 ## Inputs
 
 - `AGENTS.md` (if present)
@@ -21,12 +24,27 @@ Generate two independent architecture candidates, evaluate with a fixed rubric, 
 
 ## Execution phases
 
+### Phase 0: Future-evolution probe (before candidates)
+
+Candidates are non-interactive — they cannot ask the user. Therefore the orchestrator owns user interaction.
+
+Before launching candidate branches:
+
+1. Scan the task context for **future evolution axes** — plausible changes not in current requirements but expensive to retrofit: data source swaps (HTTP client → direct DB), transport/protocol swaps, scale-out paths, host/tenant-specific extension points, contract versioning, ownership moves to shared modules.
+2. For each axis with a concrete trigger in the task context, ask the user via the `question` tool: "Design a seam for X now, or out of scope?" Group into one call. Do not ask about generic hypotheticals.
+3. Inject the answers into BOTH candidate prompts as a `## Future provisions (user-confirmed)` block: confirmed seams must be designed in (as seam-only, not future implementation); declined axes must be recorded as deferred in the ADR and must not be re-proposed.
+4. If no axis qualifies, state `Future provisions: none probed` in the candidate prompts.
+
+Skip Phase 0 only when the task context already contains explicit user answers about future provisions (e.g. revision rounds where the user already decided).
+
 ### Phase 1: Parallel candidate generation
 
 Launch in one response:
 
 - `Task(system-architect-gpt, ...)`
 - `Task(system-architect-sonnet, ...)`
+
+Both branches receive identical task context, return candidates in Task results, and do not write files. Branches do not inspect each other before comparison.
 
 ### Phase 2: Candidate validation
 
@@ -65,6 +83,21 @@ Canonical files contain decisions, boundaries, delivery constraints, dependency 
 ## Artifact Rule
 
 Write only `.ai/adr.md` and `.ai/tasks.md`. Do not create candidate, comparison, provenance, or research artifacts. Keep scoring and synthesis rationale in orchestrator reasoning. For degraded mode, add one `Source: <model>; degraded` metadata line to both canonical files.
+
+Target ADR <= 120 lines and tasks <= 180 lines. Exceed only for concrete cross-service contract detail and add a one-line `## Detail Exception` reason.
+
+## Final Response
+
+End with `## Кратко для проверки` in Russian. Use 5-7 short bullets:
+
+- `Цель`: intended outcome in one sentence.
+- `Решение`: material synthesized decisions.
+- `Результат`: observable user or system behavior after implementation.
+- `Не входит`: important exclusions or unchanged behavior.
+- `Риски/вопросы`: material items, or `нет` when none exist.
+- `Файлы`: `.ai/adr.md`, `.ai/tasks.md`.
+
+This is a human-review gate, not another artifact. Do not copy ADR records, task cards, scores, or candidate comparisons into it.
 
 ## Guardrails
 

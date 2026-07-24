@@ -1,6 +1,6 @@
 ---
 mode: subagent
-model: openai/gpt-5.6-terra
+model: openai/gpt-5.6-sol
 color: warning
 temperature: 0.4
 permission:
@@ -13,4 +13,6 @@ permission:
     code-explorer: allow
     codebase-indexer: allow
     research-agent: allow
+  external_directory:
+    "{{references_dir}}/**": allow
 ---

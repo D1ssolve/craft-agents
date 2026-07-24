@@ -1,6 +1,6 @@
 ---
 mode: subagent
-model: openai/gpt-5.6-terra
+model: openai/gpt-5.6-sol
 color: info
 temperature: 0.4
 permission:
@@ -12,4 +12,6 @@ permission:
     "*": deny
     spec-driven-gpt: allow
     spec-driven-sonnet: allow
+  external_directory:
+    "{{references_dir}}/**": allow
 ---
