@@ -1,6 +1,8 @@
 ---
 mode: subagent
-model: kimi-for-coding/k3
+model: openai/gpt-6-astra
+# dual peer: kimi-code-plan-global/k3
+# fallback pair: openai/gpt-5.6-sol + kimi-code-plan-global/k3-256k
 color: warning
 temperature: 0.4
 permission:

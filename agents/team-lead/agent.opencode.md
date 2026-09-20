@@ -1,6 +1,7 @@
 ---
 mode: primary
-model: kimi-for-coding/k3
+model: openai/gpt-6-astra
+# fallback: kimi-code-plan-global/k3
 color: accent
 temperature: 0.2
 permission:

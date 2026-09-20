@@ -1,6 +1,7 @@
 ---
 mode: subagent
-model: kimi-for-coding/k3
+model: kimi-code-plan-global/k3
+# fallback: kimi-code-plan-global/k3-256k
 color: info
 temperature: 0.4
 permission:

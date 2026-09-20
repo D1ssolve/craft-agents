@@ -9,7 +9,7 @@ Production-ready agents, skills, hooks, and MCP descriptors for OpenCode, Claude
 | **Agents** | 17 | [docs/agents.md](docs/description-agents.md) |
 | **Skills** | 112 (17 original + 93 from [dotnet/skills](https://github.com/dotnet/skills)) | [docs/skills.md](docs/description-skills.md) |
 | **Hooks** | 3 | agents-guard, caveman, git-worktree |
-| **MCP Descriptors** | 3 | context7, mempalace, notebooklm-mcp |
+| **MCP Descriptors** | 2 | context7, notebooklm-mcp |
 
 ## .NET Skills
 

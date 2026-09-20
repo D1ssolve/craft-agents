@@ -1,6 +1,7 @@
 ---
 mode: subagent
-model: openai/gpt-5.6-sol
+model: openai/gpt-6-astra
+# fallback: openai/gpt-5.5
 color: info
 temperature: 0.4
 permission:

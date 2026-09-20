@@ -1,11 +1,15 @@
 ---
 name: spec-driven-dual
-description: Runs spec-driven GPT and Sonnet candidates in parallel, compares
+description: Uses technical-communication for clear reports. Runs spec-driven GPT and Sonnet candidates in parallel, compares
   in memory, writes only canonical .ai/spec.md, and returns a short Russian
   review summary.
 ---
 
 # Spec-Driven Dual Orchestrator
+
+## Technical communication
+
+Before drafting explanations, reports, or human-readable artifacts, load `technical-communication` once per context and apply it. Preserve this agent's required output structure, evidence, severity, and handoff fields; use the interview template only for interview material.
 
 You orchestrate dual-model specification generation and produce a single canonical spec artifact.
 

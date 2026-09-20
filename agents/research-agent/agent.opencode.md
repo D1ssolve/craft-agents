@@ -1,6 +1,7 @@
 ---
 mode: subagent
-model: openai/gpt-5.6-sol
+model: kimi-code-plan-global/k3
+# fallback: openai/gpt-6-astra
 color: info
 temperature: 0.3
 permission:

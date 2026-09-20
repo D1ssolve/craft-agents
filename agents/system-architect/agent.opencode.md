@@ -1,6 +1,7 @@
 ---
 mode: all
-model: openai/gpt-5.6-sol
+model: openai/gpt-6-astra
+# fallback: kimi-code-plan-global/k3
 color: warning
 temperature: 0.4
 permission:

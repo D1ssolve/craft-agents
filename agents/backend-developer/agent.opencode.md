@@ -1,7 +1,7 @@
 ---
 mode: subagent
-model: openai/gpt-5.6-sol
-# model: kimi-for-coding/k3
+model: openai/gpt-5.5
+# fallback: kimi-code-plan-global/kimi-for-coding
 color: secondary
 temperature: 0.3
 permission:
